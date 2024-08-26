@@ -1,0 +1,33 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0"]
+
+[project]
+name = "sthali-cli"
+version = "0.0.0.1"
+authors = [{ name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" }]
+description = "A CLI package for Sthali development"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.10",
+  # "Programming Language :: Python :: 3.11",
+  # "Programming Language :: Python :: 3.12",
+  "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Internet",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+]
+dependencies = [
+  "cookiecutter >= 2.6.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jhunufernandes/sthali-cli"
+"Bug Tracker" = "https://github.com/jhunufernandes/sthali-cli/issues"
