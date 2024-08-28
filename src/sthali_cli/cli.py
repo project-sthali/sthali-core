@@ -1,5 +1,6 @@
 import typer
-from .scripts.generate_project import generate_project
+from .scripts.generate_project import generate as generate_prjct
+from .scripts.generate_docs import generate as generate_dcs
 
 app = typer.Typer()
 
@@ -16,10 +17,10 @@ def generate_project(project_name: str):
     Attributes:
         project_name (str): Name of the project
     """
-    generate_project(project_name)
+    generate_prjct(project_name)
 
 
 @app.command()
 def generate_docs():
     """Generate a docs based on docstring"""
-    typer.echo("generate_docs")
+    generate_dcs()
