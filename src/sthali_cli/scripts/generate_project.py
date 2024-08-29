@@ -4,7 +4,7 @@ from subprocess import call
 from cookiecutter.main import cookiecutter
 
 
-def generate(project_name: str) -> None:
+def main(project_name: str) -> None:
     echo(f"Generating project with name: {project_name}")
 
     echo("Cloning template")

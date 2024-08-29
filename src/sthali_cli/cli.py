@@ -1,7 +1,9 @@
 import typer
 
-from .scripts.generate_docstring import generate as generate_dcstrng
-from .scripts.generate_project import generate as generate_prjct
+from .scripts.generate_docstring import main as main_docstring
+from .scripts.generate_project import main as main_project
+from .scripts.generate_requirements import main as main_requirements
+from .scripts.generate_api_reference import main as main_api_reference
 
 app = typer.Typer()
 
@@ -18,10 +20,30 @@ def generate_project(project_name: str):
     Attributes:
         project_name (str): Name of the project
     """
-    generate_prjct(project_name)
+    main_project(project_name)
+
+
+@app.command()
+def generate_docstring():
+    """Generate docstring based on pyproject.toml and docstrings from modules, classes and functions"""
+    main_docstring()
+
+
+@app.command()
+def generate_requirements():
+    """Generate ..."""
+    main_requirements()
+
+
+@app.command()
+def generate_api_reference():
+    """Generate ..."""
+    main_api_reference()
 
 
 @app.command()
 def generate_docs():
-    """Generate docs based on pyproject.toml and docstrings from modules, classes and functions"""
-    generate_dcstrng()
+    """Generate ..."""
+    generate_requirements()
+    generate_docstring()
+    generate_api_reference()
