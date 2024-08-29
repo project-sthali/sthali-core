@@ -1,6 +1,7 @@
 import typer
+
+from .scripts.generate_docstring import generate as generate_dcstrng
 from .scripts.generate_project import generate as generate_prjct
-from .scripts.generate_docs import generate as generate_dcs
 
 app = typer.Typer()
 
@@ -22,5 +23,5 @@ def generate_project(project_name: str):
 
 @app.command()
 def generate_docs():
-    """Generate a docs based on docstring"""
-    generate_dcs()
+    """Generate docs based on pyproject.toml and docstrings from modules, classes and functions"""
+    generate_dcstrng()

@@ -5,7 +5,7 @@ requires = ["setuptools >= 61.0"]
 [project]
 name = "{{cookiecutter.project_name}}"
 version = "0.0.0.1"
-authors = [{ name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" }]
+authors = [{ name = "{{cookiecutter.full_name}}", email = "{{cookiecutter.email}}" }]
 description = "{{cookiecutter.project_short_description}}"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -45,8 +45,8 @@ stage = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/jhunufernandes/{{cookiecutter.project_name}}"
-"Bug Tracker" = "https://github.com/jhunufernandes/{{cookiecutter.project_name}}/issues"
+"Homepage" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
+"Bug Tracker" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/issues"
 
 [tool.coverage.run]
 branch = true
