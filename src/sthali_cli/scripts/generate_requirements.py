@@ -1,29 +1,31 @@
 from os import getcwd
 from os.path import join as path_join
-from tomli import load
 from jinja2 import Template
 
 from typer import echo
 
 from .commons import read_file, write_file
 
-TEMPLATE = """# Requirements
+TEMPLATE = """
+---
 
-## Prerequisites
-- Python {{ python_version }}
+### Requirements
+
+#### Prerequisites
+- `python {{ python_version }}`
 - `pip` package manager
 
-## Runtime Dependencies
+#### Runtime Dependencies
 This project requires the following Python packages with specific versions:
 {% for dependency in dependencies %}
 - `{{ dependency }}`
 {% endfor %}
 
 {% if optional_dependencies %}
-## Optional Dependencies
+#### Optional Dependencies
 This project has optional dependencies that can be installed for additional features:
 {% for group, deps in optional_dependencies.items() %}
-### {{ group }}
+##### {{ group }}
 {% for dep in deps %}
 - `{{ dep }}`
 {% endfor %}

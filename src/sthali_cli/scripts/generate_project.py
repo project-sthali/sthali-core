@@ -1,7 +1,7 @@
 from typer import echo
 
 from subprocess import call
-from cookiecutter.main import cookiecutter
+from cookiecutter.main import cookiecutter  # type: ignore
 
 
 def main(project_name: str) -> None:
@@ -20,3 +20,6 @@ def main(project_name: str) -> None:
 
     echo("Deleting directory")
     call(["rm", "-rf", f"./{project_name}"])
+
+    echo("Copying LICENCE")
+    call(["cp", "./LICENSE", "./docs/docs/license.md"])

@@ -22,7 +22,7 @@ def main():
     echo("Rendering mkdocs_dict with the data")
     for section in mkdocs_dict["nav"]:
         if "API Reference" in section.keys():
-            section["API Reference"] = [f"api/{i}" for i in api_references]
+            section["API Reference"] = [{i: f"api/{i}"} for i in api_references]
 
     echo("Writing mkdocs.yml")
     write_file(mkdocs_path, mkdocs_dict)

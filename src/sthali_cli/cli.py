@@ -4,6 +4,7 @@ from .scripts.generate_docstring import main as main_docstring
 from .scripts.generate_project import main as main_project
 from .scripts.generate_requirements import main as main_requirements
 from .scripts.generate_api_reference import main as main_api_reference
+from .scripts.generate_readme import main as main_readme
 
 app = typer.Typer()
 
@@ -42,8 +43,15 @@ def generate_api_reference():
 
 
 @app.command()
+def generate_readme():
+    """Generate ..."""
+    main_readme()
+
+
+@app.command()
 def generate_docs():
     """Generate ..."""
     generate_requirements()
     generate_docstring()
     generate_api_reference()
+    generate_readme()

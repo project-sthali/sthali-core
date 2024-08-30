@@ -1,12 +1,15 @@
-# Instalation
 
-## Using PYPI
+---
+
+### Instalation
+
+#### Using PYPI
 
 ```
 pip install {{cookiecutter.project_name}}
 ```
 
-## Using GitHub repo
+#### Using GitHub repo
 
 ```
 git clone https://github.com/jhunufernandes/{{cookiecutter.project_name}}.git
