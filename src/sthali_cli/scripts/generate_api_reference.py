@@ -1,28 +1,26 @@
-from os import getcwd, listdir
-from os.path import join as path_join
+from os import listdir
 
 from typer import echo
+from yaml import dump, safe_load
 
-from .commons import read_file, write_file
+from .commons import API_REFERENCE_PATH, MKDOCS_FILE_PATH, File
 
 
 def main():
     echo("Generating API Reference")
-    root_path = getcwd()
 
     echo("Getting references")
-    api_reference_dir = path_join(root_path, "docs/docs/api")
-    api_references = sorted(listdir(api_reference_dir))
+    api_references = sorted(listdir(API_REFERENCE_PATH))
 
     echo("Reading mkdocs.yml")
-    mkdocs_dir = path_join(root_path, "docs")
-    mkdocs_path = path_join(mkdocs_dir, "mkdocs.yml")
-    mkdocs_dict = read_file(mkdocs_path)
+    with File(MKDOCS_FILE_PATH) as mkdocs_file:
+        mkdocs_dict = safe_load(mkdocs_file.read())
 
     echo("Rendering mkdocs_dict with the data")
     for section in mkdocs_dict["nav"]:
         if "API Reference" in section.keys():
-            section["API Reference"] = [{i: f"api/{i}"} for i in api_references]
+            section["API Reference"] = [{i.strip(".md"): f"api/{i}"} for i in api_references]
 
     echo("Writing mkdocs.yml")
-    write_file(mkdocs_path, mkdocs_dict)
+    with File(MKDOCS_FILE_PATH) as mkdocs_file:
+        dump(mkdocs_dict, mkdocs_file)

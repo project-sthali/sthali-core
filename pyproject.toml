@@ -37,4 +37,47 @@ dependencies = [
 "Bug Tracker" = "https://github.com/jhunufernandes/sthali-cli/issues"
 
 [project.scripts]
-sthali_cli = "sthali_cli.cli:app"
+sthali_cli = "sthali_cli:app"
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.format]
+exclude = [
+  "{{cookiecutter.project_name}}/",
+]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "ANN401",  # any-type
+  "TID252",  # relative-imports
+  # "ANN002",  # missing-type-args
+  # "ANN003",  # missing-type-kwargs
+  # "ANN101",  # missing-type-self
+  # "ANN102",  # missing-type-cls
+  # "COM812",  # missing-trailing-comma
+  # "ISC001",  # single-line-implicit-string-concatenation
+  # "D107",  # undocumented-public-init
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/sthali_db/clients/tinydb.py" = [
+  "PGH003",
+]
+"tests/*" = [
+  "COM812",
+  "D100",
+  "D101",
+  "D102",
+  "D104",
+  "D106",
+  "PGH003",
+  "PIE804",
+  "PT009",
+  "PT027",
+  "S101",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

@@ -1,16 +1,21 @@
-from os import getcwd
-from os.path import join as path_join
-from subprocess import call
-
 from typer import echo
+
+from .commons import DOCS_PATH, README_FILE_PATH, File
+
+files_used_in_readme = ["index", "requirements", "installation", "usage"]
 
 
 def main():
     echo("Generating readme")
-    root_path = getcwd()
 
-    echo("Concatenating docs")
-    docs_dir = path_join(root_path, "docs/docs")
-    x1 = " ".join([path_join(docs_dir, f"{i}.md") for i in ["index", "requirements", "installation", "usage"]])
-    x2 = path_join(root_path, 'README.md')
-    call(f"cat {x1} > {x2}", shell=True)
+    echo("Clearing readme")
+    with File(README_FILE_PATH, "w") as readme_file:
+        readme_file.write("\n")
+
+    with readme_file as readme_file:
+        docs_files_path_with_extension = [DOCS_PATH / f"{i}.md" for i in files_used_in_readme]
+        for doc_file_path in docs_files_path_with_extension:
+            echo(f"Concatenating doc: {doc_file_path.name}")
+            with File(doc_file_path) as doc_file:
+                doc_file_content = doc_file.read()
+                readme_file.write(doc_file_content)

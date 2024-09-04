@@ -1,10 +1,8 @@
-from os import getcwd
-from os.path import join as path_join
 from jinja2 import Template
-
+from tomli import loads
 from typer import echo
 
-from .commons import read_file, write_file
+from .commons import PYPROJECT_FILE_PATH, REQUIREMENTS_PATH, File
 
 TEMPLATE = """
 ---
@@ -33,28 +31,24 @@ This project has optional dependencies that can be installed for additional feat
 {% endif %}
 """
 
+
 def main():
     echo("Generating requirements")
-    root_path = getcwd()
 
     echo("Reading pyproject.toml")
-    pyproject_dir = path_join(root_path)
-    pyproject_path = path_join(pyproject_dir, "pyproject.toml")
-    toml_dict = read_file(pyproject_path)
+    with File(PYPROJECT_FILE_PATH) as pyproject_file:
+        pyproject_file_content = loads(pyproject_file.read())
 
     echo("Getting requirements")
-    python_version = toml_dict["project"]["requires-python"]
-    dependencies = toml_dict["project"]["dependencies"]
-    optional_dependencies = toml_dict["project"]["optional-dependencies"]
+    python_version = pyproject_file_content["project"]["requires-python"]
+    dependencies = pyproject_file_content["project"]["dependencies"]
+    optional_dependencies = pyproject_file_content["project"]["optional-dependencies"]
 
     echo("Rendering the template with the data")
     requirements = Template(TEMPLATE).render(
-        python_version=python_version,
-        dependencies=dependencies,
-        optional_dependencies=optional_dependencies
+        python_version=python_version, dependencies=dependencies, optional_dependencies=optional_dependencies
     )
 
     echo("Writing requirements")
-    requirements_dir = path_join(root_path, "docs/docs")
-    requirements_path = path_join(requirements_dir, "requirements.md")
-    write_file(requirements_path, requirements)
+    with File(REQUIREMENTS_PATH, "w") as requirements_file:
+        requirements_file.write(requirements)
