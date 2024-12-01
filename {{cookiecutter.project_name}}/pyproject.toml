@@ -1,11 +1,15 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools >= 61.0"]
+requires = [
+  "setuptools >= 61.0",
+]
 
 [project]
 name = "{{cookiecutter.project_name}}"
 version = "0.0.0.1"
-authors = [{ name = "{{cookiecutter.full_name}}", email = "{{cookiecutter.email}}" }]
+authors = [
+  { name = "{{cookiecutter.full_name}}", email = "{{cookiecutter.email}}" },
+]
 description = "{{cookiecutter.project_short_description}}"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -15,8 +19,8 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3.10",
-  # "Programming Language :: Python :: 3.11",
-  # "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet",
@@ -31,6 +35,10 @@ dependencies = [
   "pydantic >= 2.8.2",
 ]
 
+[project.urls]
+"Homepage" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
+"Bug Tracker" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/issues"
+
 [project.optional-dependencies]
 dev = [
   "coverage[toml] >= 7.6.1",
@@ -43,10 +51,6 @@ stage = [
   "build >= 1.2.1",
   "coverage[toml] >= 7.6.1",
 ]
-
-[project.urls]
-"Homepage" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}"
-"Bug Tracker" = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/issues"
 
 [tool.coverage.run]
 branch = true
@@ -64,7 +68,9 @@ exclude_lines = [
 line-length = 119
 
 [tool.ruff.lint]
-select = ["ALL"]
+select = [
+  "ALL",
+]
 ignore = [
   "ANN401",  # any-type
   "TID252",  # relative-imports

@@ -1,11 +1,15 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools>=61.0"]
+requires = [
+  "setuptools >= 61.0",
+]
 
 [project]
 name = "sthali-cli"
 version = "0.0.0.1"
-authors = [{ name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" }]
+authors = [
+  { name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" },
+]
 description = "A CLI package for Sthali development"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,8 +17,8 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3.10",
-  # "Programming Language :: Python :: 3.11",
-  # "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet",
@@ -36,19 +40,29 @@ dependencies = [
 "Homepage" = "https://github.com/jhunufernandes/sthali-cli"
 "Bug Tracker" = "https://github.com/jhunufernandes/sthali-cli/issues"
 
+[project.optional-dependencies]
+dev = [
+  "coverage[toml] >= 7.6.1",
+  "ruff >= 0.5.2",
+]
+tests = [
+  "coverage[toml] >= 7.6.1",
+]
+stage = [
+  "build >= 1.2.1",
+  "coverage[toml] >= 7.6.1",
+]
+
 [project.scripts]
 sthali_cli = "sthali_cli:app"
 
 [tool.ruff]
 line-length = 119
 
-[tool.ruff.format]
-exclude = [
-  "{{cookiecutter.project_name}}/",
-]
-
 [tool.ruff.lint]
-select = ["ALL"]
+select = [
+  "ALL",
+]
 ignore = [
   "ANN401",  # any-type
   "TID252",  # relative-imports

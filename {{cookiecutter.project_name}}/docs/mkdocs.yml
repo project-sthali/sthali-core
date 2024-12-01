@@ -4,7 +4,6 @@ site_description: "{{cookiecutter.project_short_description}}"
 site_author: "{{cookiecutter.full_name}}"
 repo_url: https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/
 repo_name: "{{cookiecutter.project_name}}"
-edit_uri: blob/main/docs/docs/
 nav:
   - Home: index.md
   - Requirements: requirements.md

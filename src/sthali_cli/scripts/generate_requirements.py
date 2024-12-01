@@ -1,6 +1,6 @@
-from jinja2 import Template
-from tomli import loads
-from typer import echo
+import jinja2
+import tomli
+import typer
 
 from .commons import PYPROJECT_FILE_PATH, REQUIREMENTS_PATH, File
 
@@ -33,22 +33,26 @@ This project has optional dependencies that can be installed for additional feat
 
 
 def main():
-    echo("Generating requirements")
+    typer.echo("Generating requirements")
 
-    echo("Reading pyproject.toml")
+    typer.echo("Clearing requirements")
+    with File(REQUIREMENTS_PATH, "w") as requirements_file:
+        requirements_file.write("\n")
+
+    typer.echo("Reading pyproject.toml")
     with File(PYPROJECT_FILE_PATH) as pyproject_file:
-        pyproject_file_content = loads(pyproject_file.read())
+        pyproject_file_content = tomli.loads(pyproject_file.read())
 
-    echo("Getting requirements")
+    typer.echo("Getting requirements")
     python_version = pyproject_file_content["project"]["requires-python"]
     dependencies = pyproject_file_content["project"]["dependencies"]
     optional_dependencies = pyproject_file_content["project"]["optional-dependencies"]
 
-    echo("Rendering the template with the data")
-    requirements = Template(TEMPLATE).render(
+    typer.echo("Rendering the template with the data")
+    requirements = jinja2.Template(TEMPLATE).render(
         python_version=python_version, dependencies=dependencies, optional_dependencies=optional_dependencies
     )
 
-    echo("Writing requirements")
+    typer.echo("Writing requirements")
     with File(REQUIREMENTS_PATH, "w") as requirements_file:
         requirements_file.write(requirements)
