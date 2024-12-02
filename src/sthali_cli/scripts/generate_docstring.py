@@ -81,12 +81,12 @@ def get_import_type_mapping(_import: typing.Any) -> TypesMapping | None:
             return None
 
 
-def get_imports_from_module(module: types.ModuleType, level: int) -> list[Doc]:
-    typer.echo(f"Getting imports from {module.__name__}")
+def get_imports_from_module(module: types.ModuleType, level: int, append: bool = True) -> list[Doc]:
+    typer.echo(f"Getting imports from {module.__name__} module")
 
     docs: list[Doc] = []
     for i in getattr(module, "__all__", []):
-        typer.echo(f"Getting metadata from {i}")
+        typer.echo(f"Getting metadata from {i} import")
 
         _import = getattr(module, i)
         name = _import.__name__
@@ -116,5 +116,10 @@ def main():
     project_module = importlib.import_module(PROJECT_SLUG)
     heading_level = 3
     imports_from_module = get_imports_from_module(project_module, heading_level)
+
+    typer.echo("Clearing API Reference folder")
+    for doc in API_REFERENCE_PATH.glob("*"):
+        doc.unlink()
+
     for doc in imports_from_module:
         recursive_writer(doc)
