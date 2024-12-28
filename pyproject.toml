@@ -5,12 +5,12 @@ requires = [
 ]
 
 [project]
-name = "sthali-cli"
+name = "sthali-core"
 version = "0.0.0.1"
 authors = [
   { name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" },
 ]
-description = "A CLI package for Sthali development"
+description = "A core package for Sthali development"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -37,8 +37,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/jhunufernandes/sthali-cli"
-"Bug Tracker" = "https://github.com/jhunufernandes/sthali-cli/issues"
+"Homepage" = "https://github.com/jhunufernandes/sthali-core"
+"Bug Tracker" = "https://github.com/jhunufernandes/sthali-core/issues"
 
 [project.optional-dependencies]
 dev = [

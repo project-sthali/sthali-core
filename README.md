@@ -1,2 +1,2 @@
-# sthali-cli
-A CLI package for Sthali development
+# sthali-core
+A core package for Sthali development

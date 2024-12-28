@@ -2,6 +2,12 @@ import mkdocs.commands.serve
 import typer
 
 from .scripts import Command, Generate
+from .utils import enum_clients
+
+__all__ = [
+    "enum_clients",
+]
+
 
 app = typer.Typer()
 state = {}

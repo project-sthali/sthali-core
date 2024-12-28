@@ -12,7 +12,7 @@ def main(project_name: str | None) -> None:
 
     typer.echo("Cloning template")
     cookiecutter(
-        "https://github.com/jhunufernandes/sthali-cli",
+        "https://github.com/jhunufernandes/sthali-core",
         no_input=True,
         overwrite_if_exists=True,
         extra_context={"project_name": project_name, "year": datetime.datetime.now().year},
