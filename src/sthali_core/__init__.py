@@ -2,10 +2,11 @@ import mkdocs.commands.serve
 import typer
 
 from .scripts import Command, Generate
-from .utils import enum_clients
+from .utils import enum_clients, run_server
 
 __all__ = [
     "enum_clients",
+    "run_server",
 ]
 
 
