@@ -3,7 +3,7 @@ import os
 import typer
 import yaml
 
-from .commons import API_REFERENCE_PATH, MKDOCS_FILE_PATH, File
+from ..commons import API_REFERENCE_PATH, MKDOCS_FILE_PATH, File
 
 
 def main():

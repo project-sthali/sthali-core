@@ -1,6 +1,6 @@
 import typer
 
-from .commons import LICENSE_DOC_PATH, LICENSE_PATH, File
+from ..commons import LICENSE_DOC_PATH, LICENSE_PATH, File
 
 
 def main():

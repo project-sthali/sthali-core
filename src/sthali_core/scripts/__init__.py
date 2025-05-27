@@ -6,68 +6,48 @@ Classes:
 """
 import enum
 
-from .generate_api_reference import main as main_api_reference
-from .generate_docstring import main as main_docstring
-from .generate_licence import main as main_licence
-from .generate_project import main as main_project
-from .generate_readme import main as main_readme
-from .generate_requirements import main as main_requirements
-
-
-class Command(str, enum.Enum):
-    """The commands that can be executed by the CLI.
-
-    Options:
-        api_reference
-        docs
-        docstring
-        project
-        readme
-        requirements
-    """
-    api_reference = "api-reference"
-    docs = "docs"
-    docstring = "docstring"
-    licence = "licence"
-    project = "project"
-    readme = "readme"
-    requirements = "requirements"
+from .docs.generate_api_reference import main as main_api_reference
+from .docs.generate_docstring import main as main_docstring
+from .docs.generate_licence import main as main_licence
+from .docs.generate_readme import main as main_readme
+from .docs.generate_requirements import main as main_requirements
+from .project.generate_project import main as main_project
+from .project.update_pyproject_dependencies import main as update_pyproject_dependencies
 
 
 class Generate:
-    """The class that executes the commands based on the provided arguments.
-
-    Attributes:
-        command (Command): The command to be executed.
-        project_name (str | None): The name of the project.
-
-    Args:
-        command (Command): The command to be executed.
-        project_name (str | None): The name of the project.
-            Defaults to None.
+    """The class that executes the options based on the provided arguments.
 
     Methods:
-        execute: Executes the command based on the provided arguments.
+        execute: Executes the option based on the provided arguments.
     """
-    def __init__(self, command: Command, project_name: str | None = None) -> None:
-        """Initializes an instance of the class.
+    class GenerateOptionsEnum(str, enum.Enum):
+        """The options that can be executed by the CLI.
 
-        Args:
-            command (Command): The command to be executed.
-            project_name (str | None): The name of the project.
-                Defaults to None.
+        Options:
+            api_reference
+            docs
+            docstring
+            project
+            readme
+            requirements
         """
-        self.command = command
-        self.project_name = project_name
+        api_reference = "api-reference"
+        docs = "docs"
+        docstring = "docstring"
+        licence = "licence"
+        project = "project"
+        readme = "readme"
+        requirements = "requirements"
 
-    def execute(self) -> None:
-        """Executes the command based on the provided arguments."""
-        command = self.command
-        match command:
-            case Command.api_reference:
+    @staticmethod
+    def execute(option: GenerateOptionsEnum, project_name: str | None = None) -> None:
+        """Executes the option based on the provided arguments."""
+        match option:
+            case Generate.GenerateOptionsEnum.api_reference:
                 main_api_reference()
 
-            case Command.docs:
+            case Generate.GenerateOptionsEnum.docs:
                 main_requirements()
                 main_readme()
 
@@ -76,18 +56,38 @@ class Generate:
 
                 main_licence()
 
-            case Command.docstring:
+            case Generate.GenerateOptionsEnum.docstring:
                 main_docstring()
 
-            case Command.licence:
+            case Generate.GenerateOptionsEnum.licence:
                 main_licence()
 
-            case Command.project:
-                main_project(self.project_name)
+            case Generate.GenerateOptionsEnum.project:
+                assert project_name is None, "Project name is required for project"
+                main_project(project_name)
                 main_licence()
 
-            case Command.readme:
+            case Generate.GenerateOptionsEnum.readme:
                 main_readme()
 
-            case Command.requirements:
+            case Generate.GenerateOptionsEnum.requirements:
                 main_requirements()
+
+
+class Update:
+    """The class that executes the options based on the provided arguments.
+
+    Methods:
+        execute: Executes the option based on the provided arguments.
+    """
+
+    class UpdateOptionsEnum(str, enum.Enum):
+        """The options that can be executed by the CLI."""
+        requirements = "requirements"
+
+    @staticmethod
+    def execute(option: UpdateOptionsEnum) -> None:
+        """Executes the option based on the provided arguments."""
+        match option:
+            case Update.UpdateOptionsEnum.requirements:
+                update_pyproject_dependencies()

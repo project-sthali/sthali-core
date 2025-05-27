@@ -2,7 +2,7 @@ import jinja2
 import tomli
 import typer
 
-from .commons import PYPROJECT_FILE_PATH, REQUIREMENTS_PATH, File
+from ..commons import PYPROJECT_FILE_PATH, REQUIREMENTS_PATH, File
 
 TEMPLATE = """
 ---

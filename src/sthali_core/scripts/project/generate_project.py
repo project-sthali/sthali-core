@@ -1,8 +1,8 @@
 import datetime
 import subprocess
 
+import cookiecutter.main  # type: ignore
 import typer
-from cookiecutter.main import cookiecutter  # type: ignore
 
 
 def main(project_name: str | None) -> None:
@@ -11,7 +11,7 @@ def main(project_name: str | None) -> None:
     typer.echo(f"Generating project with name: {project_name}")
 
     typer.echo("Cloning template")
-    cookiecutter(
+    cookiecutter.main.cookiecutter(
         "https://github.com/jhunufernandes/sthali-core",
         no_input=True,
         overwrite_if_exists=True,

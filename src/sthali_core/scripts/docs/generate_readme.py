@@ -1,6 +1,6 @@
 import typer
 
-from .commons import DOCS_PATH, README_FILE_PATH, File
+from ..commons import DOCS_PATH, README_FILE_PATH, File
 
 files_used_in_readme = ["index", "requirements", "installation", "usage"]
 

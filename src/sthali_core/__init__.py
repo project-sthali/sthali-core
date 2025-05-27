@@ -1,10 +1,13 @@
+"""{...}."""
+
 import mkdocs.commands.serve
 import typer
 
-from .scripts import Command, Generate
-from .utils import enum_clients, run_server
+from .scripts import Generate, Update
+from .utils import base, enum_clients, run_server
 
 __all__ = [
+    "base",
     "enum_clients",
     "run_server",
 ]
@@ -20,15 +23,16 @@ def callback() -> None:
 
 
 @app.command()
-def generate(command: Command, project_name: str | None = None) -> None:
-    if command == Command.project and project_name is None:
-        raise ValueError("Project name is required for project")
+def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = None) -> None:
+    Generate.execute(option, project_name)
 
-    generate_client = Generate(command, project_name)
-    generate_client.execute()
+
+@app.command()
+def update(option: Update.UpdateOptionsEnum) -> None:
+    Update.execute(option)
 
 
 @app.command()
 def serve() -> None:
     config_file = "docs/mkdocs.yml"
-    mkdocs.commands.serve.serve(config_file)
+    mkdocs.commands.serve.serve(config_file)  # type: ignore

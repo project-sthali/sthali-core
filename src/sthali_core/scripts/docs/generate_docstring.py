@@ -7,7 +7,7 @@ import jinja2
 import pydantic
 import typer
 
-from .commons import API_REFERENCE_PATH, PROJECT_SLUG, File, to_snake_case
+from ..commons import API_REFERENCE_PATH, PROJECT_SLUG, File, to_snake_case
 
 TEMPLATE = """{{ heading_level * '#' }} `{{ name }}`
 

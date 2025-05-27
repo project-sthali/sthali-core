@@ -1,0 +1,14 @@
+{
+    "coverage[toml]": {
+        "operator": ">=",
+        "version": "7.6.1"
+    },
+    "ruff": {
+        "operator": ">=",
+        "version": "0.9.10"
+    },
+    "build": {
+        "operator": ">=",
+        "version": "1.2.1"
+    }
+}
