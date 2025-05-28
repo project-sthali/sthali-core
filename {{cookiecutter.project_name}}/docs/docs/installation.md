@@ -13,6 +13,6 @@ pip install {{cookiecutter.project_name}}
 
 ```
 git clone https://github.com/jhunufernandes/{{cookiecutter.project_name}}.git
-cd yourproject
+cd {{cookiecutter.project_name}}
 pip install .
 ```
