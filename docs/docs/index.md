@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="/sthali-core/images/core.svg">
-        <img src="/sthali-core/images/core.svg" alt="SthaliCore" height="35%">
+    <a href="/sthali-core/images/sthali-core">
+        <img src="/sthali-core/images/sthali-core" alt="SthaliCore" height="35%">
     </a>
 </p>
 
