@@ -1,6 +1,6 @@
 <p align="center">
     <a href="/{{cookiecutter.project_name}}/images/{{cookiecutter.project_name}}.svg">
-        <img src="/{{cookiecutter.project_name}}/images/{{cookiecutter.project_name}}.svg" alt="SthaliCore" height="35%">
+        <img src="/{{cookiecutter.project_name}}/images/{{cookiecutter.project_name}}.svg" alt="{{cookiecutter.project_name}}" height="35%">
     </a>
 </p>
 
