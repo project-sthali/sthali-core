@@ -1,3 +1,10 @@
+"""Script to generate Markdown documentation files from Python docstrings.
+
+This script introspects modules, classes, and functions in the project,
+extracts their docstrings and metadata, and writes them as Markdown files
+to the API reference directory.
+"""
+
 import importlib
 import pathlib
 import types
@@ -20,6 +27,14 @@ TEMPLATE = """{{ heading_level * '#' }} `{{ name }}`
 
 
 def get_metadata(obj: typing.Any) -> str | None:
+    """Retrieve the Pydantic metadata description from an object, if available.
+
+    Args:
+        obj (typing.Any): The object to inspect.
+
+    Returns:
+        str | None: The description from Pydantic FieldInfo metadata, or None if not found.
+    """
     metadata: list[typing.Any] = getattr(obj, "__metadata__", [])
     field_info = next(filter(lambda x: isinstance(x, pydantic.fields.FieldInfo), metadata), None)
     if field_info:
@@ -28,16 +43,45 @@ def get_metadata(obj: typing.Any) -> str | None:
 
 
 def get_doc(obj: typing.Any) -> str | None:
+    """Get the __doc__ attribute of an object.
+
+    Args:
+        obj (typing.Any): The object to inspect.
+
+    Returns:
+        str | None: The docstring of the object, or None if not present.
+    """
     return getattr(obj, "__doc__", None)
 
 
 def get_docstring(obj: typing.Any) -> str:
+    """Get the best available docstring for an object.
+
+    Prefers Pydantic metadata description, then __doc__, or empty string.
+
+    Args:
+        obj (typing.Any): The object to inspect.
+
+    Returns:
+        str: The docstring or description.
+    """
     metadata = get_metadata(obj)
     doc = get_doc(obj)
     return metadata or doc or ""
 
 
 def render(name: str, docstring: str, level: int = 3, sub: str | None = None) -> str:
+    """Render a Markdown documentation block using Jinja2 template.
+
+    Args:
+        name (str): The name of the object.
+        docstring (str): The docstring to include.
+        level (int): The Markdown heading level. Defaults to 3.
+        sub (str | None): Rendered documentation for sub-objects. Defaults to None.
+
+    Returns:
+        str: The rendered Markdown string.
+    """
     return jinja2.Template(TEMPLATE).render(
         name=name,
         docstring=docstring,
@@ -48,6 +92,16 @@ def render(name: str, docstring: str, level: int = 3, sub: str | None = None) ->
 
 @pydantic.dataclasses.dataclass
 class Doc:
+    """Represents documentation metadata for an object.
+
+    Attributes:
+        name (str): The name of the object.
+        path (pathlib.Path): The output file path for the documentation.
+        docstring (str): The docstring or description.
+        level (int): The Markdown heading level.
+        sub (list["Doc"]): List of Doc objects for sub-objects.
+    """
+
     name: str
     path: pathlib.Path
     docstring: str
@@ -56,6 +110,14 @@ class Doc:
 
 
 def recursive_writer(doc: Doc) -> str:
+    """Recursively write documentation for a Doc object and its sub-objects.
+
+    Args:
+        doc (Doc): The Doc object to write.
+
+    Returns:
+        str: The rendered Markdown string for this Doc and its children.
+    """
     typer.echo(f"Writing docstring from import: {doc.name}")
 
     to_render = render(doc.name, doc.docstring, doc.level, "\n".join([recursive_writer(s) for s in doc.sub]))
@@ -69,7 +131,15 @@ TypesMapping = typing.Literal["module", "function", "class"]
 
 
 def get_import_type_mapping(_import: typing.Any) -> TypesMapping | None:
-    import_type: typing.Any = type(_import)
+    """Determine the type of an imported object.
+
+    Args:
+        _import (typing.Any): The imported object.
+
+    Returns:
+        TypesMapping | None: A string indicating the type: "module", "function", or "class", or None if unknown.
+    """
+    import_type: typing.Any = type(_import)  # type: ignore
     match import_type:
         case types.ModuleType:
             return "module"
@@ -81,7 +151,16 @@ def get_import_type_mapping(_import: typing.Any) -> TypesMapping | None:
             return None
 
 
-def get_imports_from_module(module: types.ModuleType, level: int, append: bool = True) -> list[Doc]:
+def get_imports_from_module(module: types.ModuleType, level: int) -> list[Doc]:
+    """Recursively extract documentation metadata from a module's __all__ exports.
+
+    Args:
+        module (types.ModuleType): The module to inspect.
+        level (int): The Markdown heading level.
+
+    Returns:
+        list[Doc]: A list of Doc objects representing the module's exports.
+    """
     typer.echo(f"Getting imports from {module.__name__} module")
 
     docs: list[Doc] = []
@@ -110,7 +189,12 @@ def get_imports_from_module(module: types.ModuleType, level: int, append: bool =
     return docs
 
 
-def main():
+def main() -> None:
+    """Generate Markdown documentation files for the project.
+
+    This function imports the project module, extracts docstrings from its exports,
+    clears the API reference directory, and writes new documentation files.
+    """
     typer.echo(f"Generating docs for {PROJECT_SLUG}")
 
     project_module = importlib.import_module(PROJECT_SLUG)
@@ -123,3 +207,5 @@ def main():
 
     for doc in imports_from_module:
         recursive_writer(doc)
+
+    typer.echo(f"Generated docs for {PROJECT_SLUG}")

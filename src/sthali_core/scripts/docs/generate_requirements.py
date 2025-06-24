@@ -1,3 +1,9 @@
+"""Script to generate the requirements documentation from pyproject.toml.
+
+This script reads the Python version, dependencies, and optional dependencies from pyproject.toml,
+renders them into a Markdown template, and writes the result to the requirements documentation file.
+"""
+
 import jinja2
 import tomli
 import typer
@@ -32,7 +38,12 @@ This project has optional dependencies that can be installed for additional feat
 """
 
 
-def main():
+def main() -> None:
+    """Generate the requirements documentation file.
+
+    This function reads the Python version and dependencies from pyproject.toml,
+    renders them into a Markdown template, and writes the output to the requirements file.
+    """
     typer.echo("Generating requirements")
 
     typer.echo("Clearing requirements")
@@ -50,9 +61,13 @@ def main():
 
     typer.echo("Rendering the template with the data")
     requirements = jinja2.Template(TEMPLATE).render(
-        python_version=python_version, dependencies=dependencies, optional_dependencies=optional_dependencies
+        python_version=python_version,
+        dependencies=dependencies,
+        optional_dependencies=optional_dependencies,
     )
 
     typer.echo("Writing requirements")
     with File(REQUIREMENTS_PATH, "w") as requirements_file:
         requirements_file.write(requirements)
+
+    typer.echo("Generated requirements")

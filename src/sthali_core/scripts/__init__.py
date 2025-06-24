@@ -4,6 +4,7 @@ Classes:
     Command: The commands that can be executed by the CLI.
     Generate: The class that executes the commands based on the provided arguments.
 """
+
 import enum
 
 from .docs.generate_api_reference import main as main_api_reference
@@ -21,6 +22,7 @@ class Generate:
     Methods:
         execute: Executes the option based on the provided arguments.
     """
+
     class GenerateOptionsEnum(str, enum.Enum):
         """The options that can be executed by the CLI.
 
@@ -32,6 +34,7 @@ class Generate:
             readme
             requirements
         """
+
         api_reference = "api-reference"
         docs = "docs"
         docstring = "docstring"
@@ -83,6 +86,7 @@ class Update:
 
     class UpdateOptionsEnum(str, enum.Enum):
         """The options that can be executed by the CLI."""
+
         requirements = "requirements"
 
     @staticmethod

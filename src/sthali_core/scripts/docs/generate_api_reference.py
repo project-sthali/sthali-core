@@ -1,3 +1,5 @@
+"""Script to generate and update the API Reference section in mkdocs.yml based on available API reference files."""
+
 import os
 
 import typer
@@ -6,7 +8,12 @@ import yaml
 from ..commons import API_REFERENCE_PATH, MKDOCS_FILE_PATH, File
 
 
-def main():
+def main() -> None:
+    """Generate and update the API Reference section in mkdocs.yml.
+
+    This function scans the API reference directory, updates the 'API Reference' section
+    in the mkdocs.yml navigation, and writes the changes back to the file.
+    """
     typer.echo("Generating API Reference")
 
     typer.echo("Getting references")
@@ -26,3 +33,5 @@ def main():
     typer.echo("Writing mkdocs.yml")
     with File(MKDOCS_FILE_PATH, "w") as mkdocs_file:
         yaml.dump(mkdocs_dict, mkdocs_file)
+
+    typer.echo("Generated API Reference")

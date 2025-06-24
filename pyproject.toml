@@ -35,7 +35,6 @@ dependencies = [
   "tomli >= 2.0.1",
   "typer >= 0.12.5",
 ]
-
 [project.urls]
 "Homepage" = "https://github.com/jhunufernandes/sthali-core"
 "Bug Tracker" = "https://github.com/jhunufernandes/sthali-core/issues"
@@ -65,22 +64,32 @@ select = [
 ]
 ignore = [
   "ANN401",  # any-type
+  "N999",  # Invalid module name
+  "PGH003",  # blanket-type-ignore
   "TID252",  # relative-imports
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"src/sthali_core/scripts/__init__.py" = [
+  "S101",  # assert
+]
+"src/sthali_core/scripts/project/generate_project.py" = [
+  "S603",  # subprocess-without-shell-equals-true
+  "S607",  # start-process-with-partial-path
+]
+"src/sthali_core/utils/run_server.py" = [
+  "S104",  # hardcoded-bind-all-interfaces
+]
 "tests/*" = [
-  "COM812",
-  "D100",
-  "D101",
-  "D102",
-  "D104",
-  "D106",
-  "PGH003",
-  "PIE804",
-  "PT009",
-  "PT027",
-  "S101",
+  "COM812",  # missing-trailing-comma
+  "D100",  # undocumented-public-module
+  "D101",  # undocumented-public-class
+  "D102",  # undocumented-public-method
+  "D104",  # undocumented-public-package
+  "D106",  # undocumented-public-nested-class
+  "PIE804",  # unnecessary-dict-kwargs
+  "PT009",  # pytest-unittest-assertion
+  "PT027",  # pytest-unittest-raises-assertion
 ]
 
 [tool.ruff.lint.pydocstyle]
