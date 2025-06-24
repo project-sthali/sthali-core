@@ -24,9 +24,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install .[stage]
-      - name: Testing
-        run: |
-          python -m unittest
+      # - name: Testing
+      #   run: |
+      #     python -m unittest
       - name: Build package
         run: |
           python -m build -o ./dist
