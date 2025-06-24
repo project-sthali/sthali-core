@@ -9,12 +9,12 @@ nav:
   - run_server: api/module_run_server.md
 - About:
   - License: license.md
-  - Release Notes: https://github.com/jhunufernandes/sthali-db/pulls?q=is%3Apr+is%3Aclosed+release
-  - Issue Tracker: https://github.com/jhunufernandes/sthali-db/issues
-repo_name: sthali-db
-repo_url: https://github.com/jhunufernandes/sthali-db/
+  - Release Notes: https://github.com/jhunufernandes/sthali-core/pulls?q=is%3Apr+is%3Aclosed+release
+  - Issue Tracker: https://github.com/jhunufernandes/sthali-core/issues
+repo_name: sthali-core
+repo_url: https://github.com/jhunufernandes/sthali-core/
 site_author: '{{cookiecutter.full_name}}'
 site_description: '{{cookiecutter.project_short_description}}'
-site_name: sthali-db
-site_url: https://jhunufernandes.github.io/sthali-db/
+site_name: sthali-core
+site_url: https://jhunufernandes.github.io/sthali-core/
 theme: readthedocs

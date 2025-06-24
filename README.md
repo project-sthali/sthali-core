@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="/sthali-db/images/db.svg">
-        <img src="/sthali-db/images/db.svg" alt="SthaliDB" height="35%">
+    <a href="/sthali-core/images/core.svg">
+        <img src="/sthali-core/images/core.svg" alt="SthaliCore" height="35%">
     </a>
 </p>
 
@@ -61,14 +61,14 @@ This project has optional dependencies that can be installed for additional feat
 #### Using PYPI
 
 ```
-pip install sthali-db
+pip install sthali-core
 ```
 
 #### Using GitHub repo
 
 ```
-git clone https://github.com/jhunufernandes/sthali-db.git
-cd sthali-db
+git clone https://github.com/jhunufernandes/sthali-core.git
+cd sthali-core
 pip install .
 ```
 

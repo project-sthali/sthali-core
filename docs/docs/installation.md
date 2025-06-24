@@ -6,13 +6,13 @@
 #### Using PYPI
 
 ```
-pip install sthali-db
+pip install sthali-core
 ```
 
 #### Using GitHub repo
 
 ```
-git clone https://github.com/jhunufernandes/sthali-db.git
-cd sthali-db
+git clone https://github.com/jhunufernandes/sthali-core.git
+cd sthali-core
 pip install .
 ```
