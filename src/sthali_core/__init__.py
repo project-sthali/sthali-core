@@ -1,4 +1,7 @@
-"""{...}."""
+"""Sthali Core package CLI and main application entry points.
+
+Provides Typer CLI commands for generating, updating, and serving documentation and projects.
+"""
 
 import mkdocs.commands.serve
 import typer
