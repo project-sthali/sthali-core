@@ -1,15 +1,13 @@
-name: Build PyPI
+name: Build Upload PyPI
 on:
   push:
     branches:
       - main
 jobs:
   pypi-publish:
-    name: Publish release to PyPI
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/sthali-core
     permissions:
       id-token: write
     steps:
