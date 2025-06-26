@@ -1,4 +1,4 @@
-name: Build Upload PyPI
+name: push branch main
 on:
   push:
     branches:
@@ -6,8 +6,6 @@ on:
 jobs:
   pypi-publish:
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
     permissions:
       id-token: write
     steps:
@@ -30,3 +28,23 @@ jobs:
           python -m build -o ./dist
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+  mkdocs-gh-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      - name: Upgrade pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: Install dependencies
+        run: |
+          python -m pip install .[stage]
+      - name: Testing
+        run: |
+          python -m unittest discover -v
+      - name: Deploy docs
+        run: |
+          python -m mkdocs gh-deploy -f docs/mkdocs.yml
