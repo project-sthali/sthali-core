@@ -21,14 +21,13 @@ jobs:
           else
             echo "is_push=false" >> $GITHUB_OUTPUT
           fi
-  python-unittest:
+  install-python-deps:
     needs: detect-event-type
     uses: ./.github/workflows/install-python-deps.yml
     with:
       extras: ${{ needs.detect-event-type.outputs.is_push_event == 'true' && 'stage' || 'tests' }}
     secrets: inherit
   run-tests:
-    name: Run Unit Tests
     runs-on: ubuntu-latest
     needs: python-unittest
     steps:
