@@ -32,6 +32,6 @@ jobs:
     needs: install-python-deps
     steps:
       - name: Echo directory
-        run: ls
+        run: echo `ls`
       - name: Run Tests
         run: python -m unittest discover -v
