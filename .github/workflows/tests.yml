@@ -31,5 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-python-deps
     steps:
+      - name: Echo directory
+        run: ls
       - name: Run Tests
-        run: python -m unittest -v
+        run: python -m unittest discover -v
