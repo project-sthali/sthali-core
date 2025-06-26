@@ -32,4 +32,4 @@ jobs:
     needs: install-python-deps
     steps:
       - name: Run Tests
-        run: python -m unittest discover -v
+        run: python -m unittest -v
