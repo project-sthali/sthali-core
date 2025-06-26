@@ -25,7 +25,7 @@ class Clients:
 
     @property
     def _src_path(self) -> pathlib.Path:
-        return next(filter(lambda x: x.name == "src", self.clients_directory.parents))
+        return next(filter(lambda x: x.name in ["src", "site-packages"], self.clients_directory.parents))
 
     @property
     def clients_map(self) -> dict[str, types.ModuleType]:
