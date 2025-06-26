@@ -1,0 +1,36 @@
+name: Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - development
+jobs:
+  detect-event-type:
+    runs-on: ubuntu-latest
+    outputs:
+      is_push_event: ${{ steps.set-output.outputs.is_push }}
+    steps:
+      - name: Check event type
+        id: set-output
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "is_push=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_push=false" >> $GITHUB_OUTPUT
+          fi
+  python-unittest:
+    needs: detect-event-type
+    uses: ./.github/workflows/install-python-deps.yml
+    with:
+      extras: ${{ needs.detect-event-type.outputs.is_push_event == 'true' && 'stage' || 'tests' }}
+    secrets: inherit
+  run-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    needs: python-unittest
+    steps:
+      - name: Run Tests
+        run: python -m unittest discover -v

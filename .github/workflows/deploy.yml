@@ -1,0 +1,51 @@
+name: Deploy
+on:
+  workflow_run:
+    workflows:
+      - "Tests"
+    branches:
+      - main
+    types:
+      - completed
+jobs:
+  check-conditions:
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.verify.outputs.should_deploy }}
+    steps:
+      - name: Verify deployment conditions
+        id: verify
+        env:
+          TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          TESTS_EVENT: ${{ fromJson(github.event.workflow_run.inputs).is_push_event }}
+        run: |
+          if [ "$TESTS_CONCLUSION" = "success" ] && [ "$TESTS_EVENT" = "true" ]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+          fi
+  pypi-publish:
+    if: ${{ needs.check-conditions.outputs.should_deploy == 'true' }}
+    needs:
+      - check-conditions
+    uses: ./.github/workflows/install-python-deps.yml
+    with:
+      extras: "stage"
+    secrets: inherit
+    permissions:
+      id-token: write
+  build-publish:
+    name: Build and Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: pypi-publish
+    steps:
+      - name: Build package
+        run: python -m build -o ./dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+  gh-pages-deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: pypi-publish
+    steps:
+      - name: Deploy docs
+        run: python -m mkdocs gh-deploy -f docs/mkdocs.yml
