@@ -1,15 +1,12 @@
-name: Test
+name: install python deps
 on:
-  pull_request:
-    branches:
-      - main
-      - development
-  push:
-    branches:
-      - main
-      - development
+  workflow_call:
+    inputs:
+      extras:
+        required: true
+        type: string
 jobs:
-  test-package:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +19,6 @@ jobs:
           python -m pip install --upgrade pip
       - name: Install dependencies
         run: |
-          python -m pip install .[tests]
-      - name: Testing
-        run: |
-          python -m unittest discover -v
+          python -m pip install .[${{ inputs.extras }}]
+    outputs:
+      python-version: ${{ steps.setup-python.outputs.python-version }}

@@ -11,3 +11,6 @@ dist
 
 # Cache directories
 *_cache
+
+# Docs static files
+docs/site
