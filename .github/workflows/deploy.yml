@@ -40,7 +40,7 @@ jobs:
     needs: install-python-deps
     steps:
       - name: Build package
-        run: python -m build -o ./dist
+        run: python -m build
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
     name: Deploy to GitHub Pages
