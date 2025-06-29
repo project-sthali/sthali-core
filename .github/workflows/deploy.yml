@@ -1,8 +1,8 @@
-name: Deploy
+name: deploy
 on:
   workflow_run:
     workflows:
-      - "Tests"
+      - "tests"
     branches:
       - main
     types:
@@ -17,14 +17,14 @@ jobs:
         id: verify
         env:
           TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          TESTS_EVENT: ${{ fromJson(github.event.workflow_run.inputs).is_push_event }}
+          EVENT_IS_PUSH: ${{ github.event.workflow_run.outputs.is_push_event }}
         run: |
-          if [ "$TESTS_CONCLUSION" = "success" ] && [ "$TESTS_EVENT" = "true" ]; then
+          if [ "$TESTS_CONCLUSION" = "success" ] && [ "$EVENT_IS_PUSH" = "true" ]; then
             echo "should_deploy=true" >> $GITHUB_OUTPUT
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
-  pypi-publish:
+  install-python-deps:
     if: ${{ needs.check-conditions.outputs.should_deploy == 'true' }}
     needs:
       - check-conditions
@@ -37,7 +37,7 @@ jobs:
   build-publish:
     name: Build and Publish to PyPI
     runs-on: ubuntu-latest
-    needs: pypi-publish
+    needs: install-python-deps
     steps:
       - name: Build package
         run: python -m build -o ./dist
