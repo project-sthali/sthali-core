@@ -34,7 +34,7 @@ jobs:
     secrets: inherit
     permissions:
       id-token: write
-  build-publish:
+  pypi-publish:
     name: Build and Publish to PyPI
     runs-on: ubuntu-latest
     needs: install-python-deps
