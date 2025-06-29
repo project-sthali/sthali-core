@@ -17,9 +17,8 @@ jobs:
         id: verify
         env:
           TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          EVENT_TYPE: ${{ github.event.workflow_run.outputs.event_type }}
         run: |
-          if [ "$TESTS_CONCLUSION" = "success" ] && [ "$EVENT_TYPE" = "true" ]; then
+          if [ "$TESTS_CONCLUSION" = "success" ]; then
             echo "should_deploy=true" >> $GITHUB_OUTPUT
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
