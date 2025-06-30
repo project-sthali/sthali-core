@@ -17,16 +17,16 @@ jobs:
       - name: Create virtual environment
         run: |
           python -m venv ./.venv
-      # - name: Install dependencies
-      #   run: |
-      #     ./.venv/bin/python -m pip install --upgrade pip
-      #     ./.venv/bin/python -m pip install .[${{ inputs.extras }}]
-      - name: Upgrade pip
-        run: |
-          ./.venv/bin/python -m pip install --upgrade pip
       - name: Install dependencies
         run: |
+          ./.venv/bin/python -m pip install --upgrade pip
           ./.venv/bin/python -m pip install .[${{ inputs.extras }}]
+      # - name: Upgrade pip
+      #   run: |
+      #     ./.venv/bin/python -m pip install --upgrade pip
+      # - name: Install dependencies
+      #   run: |
+      #     ./.venv/bin/python -m pip install .[${{ inputs.extras }}]
       - uses: actions/upload-artifact@v4
         with:
           name: python-deps
