@@ -5,18 +5,25 @@ on:
       extras:
         required: true
         type: string
+        description: 'The "extra" dependencies to install (e.g., "tests", "docs")'
 jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
       - name: Upgrade pip
         run: |
           python -m pip install --upgrade pip
+      - name: Create virtual environment
+        run: |
+          python -m venv ./.venv
       - name: Install dependencies
         run: |
           python -m pip install .[${{ inputs.extras }}]
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-deps
+          path: ./.venv

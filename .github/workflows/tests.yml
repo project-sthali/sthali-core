@@ -22,8 +22,9 @@ jobs:
             echo "is_push=false" >> $GITHUB_OUTPUT
           fi
   install-deps:
+    needs:
+      - detect-event-type
     uses: ./.github/workflows/install-python-deps.yml
-    needs: detect-event-type
     with:
       extras: ${{ needs.detect-event-type.outputs.is_push_event == 'true' && 'stage' || 'tests' }}
   run-tests:
@@ -31,13 +32,10 @@ jobs:
     needs: install-deps
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/download-artifact@v4
         with:
-          python-version: "3.x"
-      - name: Upgrade pip
-        run: |
-          python -m pip install --upgrade pip
+          name: python-deps
+          path: ./.venv
       - name: Run Tests
         run: |
           python -m unittest discover -v
