@@ -41,7 +41,7 @@ jobs:
           path: .
       - run: |
           unzip venv.zip
-          python -m build -o ./dist
+          .venv/bin/python -m build -o ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
           path: .
       - run: |
           unzip venv.zip
-          python -m mkdocs gh-deploy -f docs/mkdocs.yml
+          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml
