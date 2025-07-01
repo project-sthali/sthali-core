@@ -13,8 +13,7 @@ jobs:
     outputs:
       is_push_event: ${{ steps.set-output.outputs.is_push }}
     steps:
-      - name: Check event type
-        id: set-output
+      - id: set-output
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             echo "is_push=true" >> $GITHUB_OUTPUT
@@ -35,8 +34,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: python-deps
-          path: .venv.zip
-      - name: Run Tests
-        run: |
+          path: venv.zip
+      - run: |
           unzip venv.zip
           ./.venv/bin/python -m unittest discover -v

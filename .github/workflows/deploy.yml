@@ -13,8 +13,7 @@ jobs:
     outputs:
       should_deploy: ${{ steps.verify.outputs.should_deploy }}
     steps:
-      - name: Verify deployment conditions
-        id: verify
+      - id: verify
         env:
           TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
         run: |
@@ -31,7 +30,6 @@ jobs:
     with:
       extras: "stage"
   pypi-publish:
-    name: Build and Publish to PyPI
     runs-on: ubuntu-latest
     needs:
       - install-deps
@@ -41,11 +39,10 @@ jobs:
         with:
           name: python-deps
           path: ./.venv
-      - name: Build package
-        run: python -m build -o ./dist
+      - run: |
+          python -m build -o ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
-    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs:
       - install-deps
@@ -55,5 +52,5 @@ jobs:
         with:
           name: python-deps
           path: ./.venv
-      - name: Deploy docs
-        run: python -m mkdocs gh-deploy -f docs/mkdocs.yml
+      - run: |
+          python -m mkdocs gh-deploy -f docs/mkdocs.yml
