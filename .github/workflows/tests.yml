@@ -38,5 +38,5 @@ jobs:
           path: .venv.zip
       - name: Run Tests
         run: |
-          unzip -o .venv.zip -d ./
+          unzip venv.zip
           ./.venv/bin/python -m unittest discover -v
