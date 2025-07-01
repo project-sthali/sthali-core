@@ -20,5 +20,5 @@ jobs:
           zip -r venv.zip .venv
       - uses: actions/upload-artifact@v4
         with:
-          name: python-deps
+          name: python-deps-${{ inputs.extras }}
           path: venv.zip
