@@ -19,12 +19,8 @@ jobs:
           python -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
           .venv/bin/python -m pip install .[${{ inputs.extras }}]
-        # run: |
-        #   python -m venv .venv
-        #   .venv/bin/python -m pip install --upgrade pip
-        #   .venv/bin/python -m pip install .[${{ inputs.extras }}]
-        #   zip -r venv.zip .venv
+          zip -r venv.zip .venv
       - uses: actions/upload-artifact@v4
         with:
           name: python-deps
-          path: .venv
+          path: venv.zip
