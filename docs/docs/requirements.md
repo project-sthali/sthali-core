@@ -33,6 +33,8 @@ This project has optional dependencies that can be installed for additional feat
 
 - `coverage[toml] >= 7.9.1`
 
+- `mkdocs >= 1.6.1`
+
 - `ruff >= 0.12.0`
 
 
