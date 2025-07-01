@@ -13,8 +13,7 @@ jobs:
     outputs:
       should_deploy: ${{ steps.verify.outputs.should_deploy }}
     steps:
-      - name: Verify deployment conditions
-        id: verify
+      - id: verify
         env:
           TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
         run: |
@@ -23,29 +22,37 @@ jobs:
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
-  install-python-deps:
+  install-deps:
     if: ${{ needs.check-conditions.outputs.should_deploy == 'true' }}
     needs:
       - check-conditions
     uses: ./.github/workflows/install-python-deps.yml
     with:
       extras: "stage"
-    secrets: inherit
-    permissions:
-      id-token: write
   pypi-publish:
-    name: Build and Publish to PyPI
     runs-on: ubuntu-latest
-    needs: install-python-deps
+    needs:
+      - install-deps
     steps:
       - uses: actions/checkout@v4
-      - name: Build package
-        run: python -m build -o ./dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps
+          path: .
+      - run: |
+          unzip venv.zip
+          python -m build -o ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
-    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: pypi-publish
+    needs:
+      - install-deps
     steps:
-      - name: Deploy docs
-        run: python -m mkdocs gh-deploy -f docs/mkdocs.yml
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps
+          path: .
+      - run: |
+          unzip venv.zip
+          python -m mkdocs gh-deploy -f docs/mkdocs.yml
