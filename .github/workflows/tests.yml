@@ -10,30 +10,32 @@ on:
 jobs:
   detect-event-type:
     runs-on: ubuntu-latest
-    outputs:
-      is_push_event: ${{ steps.set-output.outputs.is_push }}
     steps:
       - id: set-output
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            echo "is_push=true" >> $GITHUB_OUTPUT
+            echo "event_type=push" >> $GITHUB_OUTPUT
           else
-            echo "is_push=false" >> $GITHUB_OUTPUT
+            echo "event_type=pull" >> $GITHUB_OUTPUT
           fi
+    outputs:
+      event_type: ${{ steps.set-output.outputs.event_type }}
   install-deps:
     needs:
       - detect-event-type
     uses: ./.github/workflows/install-python-deps.yml
     with:
-      extras: ${{ needs.detect-event-type.outputs.is_push_event == 'true' && 'stage' || 'tests' }}
+      extras: ${{ needs.detect-event-type.outputs.event_type == 'push' && 'stage' || 'tests' }}
   run-tests:
     runs-on: ubuntu-latest
-    needs: install-deps
+    needs:
+      - detect-event-type
+      - install-deps
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: python-deps-tests
+          name: python-deps-${{ needs.detect-event-type.outputs.event_type == 'push' && 'stage' || 'tests' }}
           path: .
       - run: |
           unzip venv.zip
