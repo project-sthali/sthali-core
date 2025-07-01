@@ -34,7 +34,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: python-deps
-          path: venv.zip
+          path: .
       - run: |
           unzip venv.zip
-          ./.venv/bin/python -m unittest discover -v
+          .venv/bin/python -m unittest discover -v

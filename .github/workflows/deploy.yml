@@ -38,8 +38,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: python-deps
-          path: ./.venv
+          path: .
       - run: |
+          unzip venv.zip
           python -m build -o ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
@@ -51,6 +52,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: python-deps
-          path: ./.venv
+          path: .
       - run: |
+          unzip venv.zip
           python -m mkdocs gh-deploy -f docs/mkdocs.yml
