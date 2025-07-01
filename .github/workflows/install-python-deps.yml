@@ -14,19 +14,11 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.x"
-      - name: Create virtual environment
+      - name: Create virtual environment and install dependencies
         run: |
           python -m venv ./.venv
-      - name: Install dependencies
-        run: |
           ./.venv/bin/python -m pip install --upgrade pip
           ./.venv/bin/python -m pip install .[${{ inputs.extras }}]
-      # - name: Upgrade pip
-      #   run: |
-      #     ./.venv/bin/python -m pip install --upgrade pip
-      # - name: Install dependencies
-      #   run: |
-      #     ./.venv/bin/python -m pip install .[${{ inputs.extras }}]
       - uses: actions/upload-artifact@v4
         with:
           name: python-deps
