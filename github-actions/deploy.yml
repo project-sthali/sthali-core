@@ -1,0 +1,60 @@
+name: deploy
+on:
+  workflow_run:
+    workflows:
+      - "tests"
+    branches:
+      - main
+    types:
+      - completed
+jobs:
+  check-conditions:
+    runs-on: ubuntu-latest
+    steps:
+      - id: verify
+        env:
+          TESTS_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          if [ "$TESTS_CONCLUSION" = "success" ]; then
+            echo "should_deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_deploy=false" >> $GITHUB_OUTPUT
+          fi
+    outputs:
+      should_deploy: ${{ steps.verify.outputs.should_deploy }}
+  install-deps:
+    if: ${{ needs.check-conditions.outputs.should_deploy == 'true' }}
+    needs:
+      - check-conditions
+    uses: ./.github/workflows/install-python-deps.yml
+    with:
+      extras: "stage"
+  pypi-publish:
+    runs-on: ubuntu-latest
+    needs:
+      - install-deps
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps-stage
+          path: .
+      - run: |
+          unzip venv.zip
+          .venv/bin/python -m build -o ./dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+  gh-pages-deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - install-deps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps-stage
+          path: .
+      - run: |
+          unzip venv.zip
+          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml
