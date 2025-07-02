@@ -10,8 +10,6 @@ on:
 jobs:
   check-conditions:
     runs-on: ubuntu-latest
-    outputs:
-      should_deploy: ${{ steps.verify.outputs.should_deploy }}
     steps:
       - id: verify
         env:
@@ -22,6 +20,8 @@ jobs:
           else
             echo "should_deploy=false" >> $GITHUB_OUTPUT
           fi
+    outputs:
+      should_deploy: ${{ steps.verify.outputs.should_deploy }}
   install-deps:
     if: ${{ needs.check-conditions.outputs.should_deploy == 'true' }}
     needs:
@@ -33,6 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - install-deps
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
