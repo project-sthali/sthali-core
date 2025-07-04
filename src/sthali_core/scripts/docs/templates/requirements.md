@@ -1,22 +1,25 @@
-# Requirements
 
-## Prerequisites
+---
 
-- Python {{ python_version }}
+### Requirements
+
+#### Prerequisites
+- `python {{ project["requires-python"] | safe }}`
 - `pip` package manager
 
-## Runtime Dependencies
-
+#### Runtime Dependencies
 This project requires the following Python packages with specific versions:
-
-{% for dependency in dependencies %}
-- `{{ dependency }}`
+{% for dependency in project["dependencies"] %}
+- `{{ dependency | safe }}`
 {% endfor %}
 
-## Optional Dependencies
-{% for group, deps in optional_dependencies.items() %}
-### {{ group }}
+{% if project.get("optional-dependencies") %}
+#### Optional Dependencies
+This project has optional dependencies that can be installed for additional features:
+{% for group, deps in project["optional-dependencies"].items() %}
+##### {{ group }}
 {% for dep in deps %}
-- `{{ dep }}`
+- `{{ dep | safe }}`
 {% endfor %}
 {% endfor %}
+{% endif %}

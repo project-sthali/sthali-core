@@ -7,11 +7,16 @@ Classes:
 
 import enum
 
-from .docs.generate_api_reference import main as main_api_reference
+from .commons import read_pyproject
+# from .docs.generate_api_reference import main as main_api_reference
 from .docs.generate_docstring import main as main_docstring
+from .docs.generate_index_file import main as main_index
+from .docs.generate_installation import main as main_installation
 from .docs.generate_licence import main as main_licence
+from .docs.generate_mkdocs import main as main_mkdocs
 from .docs.generate_readme import main as main_readme
 from .docs.generate_requirements import main as main_requirements
+from .docs.generate_usage import main as main_usage
 from .project.generate_project import main as main_project
 from .project.update_pyproject_dependencies import main as update_pyproject_dependencies
 
@@ -27,43 +32,66 @@ class Generate:
         """The options that can be executed by the CLI.
 
         Options:
-            api_reference
+            #################################333# api-reference
             docs
             docstring
+            index-file
+            installation
+            mkdocs
             project
             readme
             requirements
+            usage
         """
 
-        api_reference = "api-reference"
+        # api_reference = "api-reference"
         docs = "docs"
         docstring = "docstring"
+        index_file = "index-file"
+        installation = "installation"
         licence = "licence"
+        mkdocs = "mkdocs"
         project = "project"
         readme = "readme"
         requirements = "requirements"
+        usage = "usage"
 
     @staticmethod
     def execute(option: GenerateOptionsEnum, project_name: str | None = None) -> None:
         """Executes the option based on the provided arguments."""
+        pyproject_content = read_pyproject()
+        organization_name = "project-sthali"
         match option:
-            case Generate.GenerateOptionsEnum.api_reference:
-                main_api_reference()
+            # case Generate.GenerateOptionsEnum.api_reference:
+            #     main_api_reference(pyproject_content)
 
             case Generate.GenerateOptionsEnum.docs:
-                main_requirements()
+                main_index(pyproject_content, organization_name)
+                main_requirements(pyproject_content)
+                main_installation(pyproject_content, organization_name)
+                main_usage()
                 main_readme()
 
                 main_docstring()
-                main_api_reference()
+                # main_api_reference(pyproject_content)
+                main_mkdocs(pyproject_content, organization_name)
 
                 main_licence()
 
             case Generate.GenerateOptionsEnum.docstring:
                 main_docstring()
 
+            case Generate.GenerateOptionsEnum.index_file:
+                main_index(pyproject_content, organization_name)
+
+            case Generate.GenerateOptionsEnum.installation:
+                main_installation(pyproject_content, organization_name)
+
             case Generate.GenerateOptionsEnum.licence:
                 main_licence()
+
+            case Generate.GenerateOptionsEnum.mkdocs:
+                main_mkdocs(pyproject_content, organization_name)
 
             case Generate.GenerateOptionsEnum.project:
                 assert project_name is None, "Project name is required for project"
@@ -74,7 +102,10 @@ class Generate:
                 main_readme()
 
             case Generate.GenerateOptionsEnum.requirements:
-                main_requirements()
+                main_requirements(pyproject_content)
+
+            case Generate.GenerateOptionsEnum.usage:
+                main_usage()
 
 
 class Update:

@@ -1,8 +1,8 @@
 site_name: "{{cookiecutter.project_name}}"
-site_url: https://{{cookiecutter.github_username}}.github.io/{{cookiecutter.project_name}}/
+site_url: https://{{organization_name}}.github.io/{{cookiecutter.project_name}}/
 site_description: "{{cookiecutter.project_short_description}}"
 site_author: "{{cookiecutter.full_name}}"
-repo_url: https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/
+repo_url: https://github.com/project-sthali/{{cookiecutter.project_name}}/
 repo_name: "{{cookiecutter.project_name}}"
 nav:
   - Home: index.md
