@@ -8,7 +8,6 @@ Classes:
 import enum
 
 from .commons import read_pyproject
-# from .docs.generate_api_reference import main as main_api_reference
 from .docs.generate_docstring import main as main_docstring
 from .docs.generate_index_file import main as main_index
 from .docs.generate_installation import main as main_installation
@@ -32,7 +31,6 @@ class Generate:
         """The options that can be executed by the CLI.
 
         Options:
-            #################################333# api-reference
             docs
             docstring
             index-file
@@ -44,7 +42,6 @@ class Generate:
             usage
         """
 
-        # api_reference = "api-reference"
         docs = "docs"
         docstring = "docstring"
         index_file = "index-file"
@@ -62,9 +59,6 @@ class Generate:
         pyproject_content = read_pyproject()
         organization_name = "project-sthali"
         match option:
-            # case Generate.GenerateOptionsEnum.api_reference:
-            #     main_api_reference(pyproject_content)
-
             case Generate.GenerateOptionsEnum.docs:
                 main_index(pyproject_content, organization_name)
                 main_requirements(pyproject_content)
@@ -73,7 +67,6 @@ class Generate:
                 main_readme()
 
                 main_docstring()
-                # main_api_reference(pyproject_content)
                 main_mkdocs(pyproject_content, organization_name)
 
                 main_licence()

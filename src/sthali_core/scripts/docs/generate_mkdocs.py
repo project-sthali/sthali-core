@@ -3,18 +3,16 @@
 This script read contents from pyproject.toml, renders them into a Markdown template, and writes the result to the
 index documentation file.
 """
-
-"""Script to generate and update the API Reference section in mkdocs.yml based on available API reference files."""
 import pathlib
 import typing
 
 import typer
 import yaml
 
+from ..commons import API_REFERENCE_PATH, BASE_DOCS_PATH, TEMPLATES, File
+
 if typing.TYPE_CHECKING:
     import fastapi.templating
-
-from ..commons import API_REFERENCE_PATH, BASE_DOCS_PATH, TEMPLATES, File
 
 
 def main(pyproject_content: dict[str, typing.Any], organization_name: str | None = None) -> None:
