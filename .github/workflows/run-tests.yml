@@ -1,0 +1,21 @@
+name: run-tests
+on:
+  workflow_call
+jobs:
+  install-deps:
+    uses: ./.github/workflows/install-python-deps.yml
+    with:
+      extras: ${{ github.event_name == 'push' && 'stage' || 'tests' }}
+  run-tests:
+    runs-on: ubuntu-latest
+    needs:
+      - install-deps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps-${{ github.event_name == 'push' && 'stage' || 'tests' }}
+          path: .
+      - run: |
+          unzip venv.zip
+          .venv/bin/python -m unittest discover -v

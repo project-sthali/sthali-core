@@ -12,13 +12,14 @@ authors = [
 ]
 description = "A core package for Sthali development"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">= 3.10"
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet",
@@ -37,9 +38,13 @@ dependencies = [
   "typer >= 0.16.0",
   "uvicorn >= 0.34.3",
 ]
+
 [project.urls]
-"Homepage" = "https://github.com/jhunufernandes/sthali-core"
-"Bug Tracker" = "https://github.com/jhunufernandes/sthali-core/issues"
+"Homepage" = "https://github.com/project-sthali/sthali-core"
+"Bug Tracker" = "https://github.com/project-sthali/sthali-core/issues"
+"Source" = "https://github.com/project-sthali/sthali-core"
+"Documentation" = "https://project-sthali.github.io/sthali-core"
+"Changelog" = "https://github.com/project-sthali/sthali-core/releases"
 
 [project.optional-dependencies]
 dev = [
@@ -75,6 +80,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "src/sthali_core/scripts/__init__.py" = [
+  "C901",  # complex-structure
   "S101",  # assert
 ]
 "src/sthali_core/scripts/project/generate_project.py" = [

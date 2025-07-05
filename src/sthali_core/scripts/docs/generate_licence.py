@@ -1,27 +1,38 @@
 """Script to generate the license documentation file from the main LICENSE file.
 
-This script clears the license documentation file and writes the contents of the LICENSE file into it.
+This script write the content of the LICENSE file into it.
 """
+
+import datetime
+import typing
 
 import typer
 
-from ..commons import LICENSE_DOC_PATH, LICENSE_PATH, File
+if typing.TYPE_CHECKING:
+    import fastapi.templating
+
+from ..commons import DOCS_PATH, ROOT_PATH, TEMPLATES, File
 
 
-def main() -> None:
+def main(pyproject_content: dict[str, typing.Any]) -> None:
     """Generate the license documentation file.
 
-    This function clears the license documentation file and writes the contents
-    of the LICENSE file into the documentation file.
+    This function write the content of the LICENSE file into the documentation file.
     """
     typer.echo("Generating license")
 
-    typer.echo("Clearing license")
-    with File(LICENSE_DOC_PATH, "w") as license_doc_file:
-        license_doc_file.write("\n")
+    typer.echo("Rendering the template with the data")
+    license_template: fastapi.templating.Jinja2Templates = TEMPLATES.get_template("LICENSE")  # type: ignore
+    license_content: str = license_template.render(  # type: ignore
+        **pyproject_content,
+        year=datetime.datetime.now().year,
+    )
 
-    with File(LICENSE_DOC_PATH, "w") as license_doc_file, File(LICENSE_PATH) as license_file:
-        license_file_content = license_file.read()
-        license_doc_file.write(license_file_content)
+    typer.echo("Writing licenses")
+    with File(DOCS_PATH / "license.md", "w") as license_file:
+        license_file.write(license_content)
+
+    with File(ROOT_PATH / "LICENSE", "w") as license_file:
+        license_file.write(license_content)
 
     typer.echo("Generated license")

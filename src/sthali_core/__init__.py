@@ -6,7 +6,7 @@ Provides Typer CLI commands for generating, updating, and serving documentation 
 import mkdocs.commands.serve
 import typer
 
-from .scripts import Generate, Update
+from .scripts import Generate, commons
 from .utils import base, enum_clients, run_server
 
 __all__ = [
@@ -31,11 +31,7 @@ def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = No
 
 
 @app.command()
-def update(option: Update.UpdateOptionsEnum) -> None:
-    Update.execute(option)
-
-
-@app.command()
 def serve() -> None:
-    config_file = "docs/mkdocs.yml"
-    mkdocs.commands.serve.serve(config_file)  # type: ignore
+    typer.echo("Serving documentation...")
+    config_file_path = str(commons.BASE_DOCS_PATH / "mkdocs.yml")
+    mkdocs.commands.serve.serve(config_file_path)  # type: ignore
