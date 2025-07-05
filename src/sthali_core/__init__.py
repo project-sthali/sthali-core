@@ -6,7 +6,7 @@ Provides Typer CLI commands for generating, updating, and serving documentation 
 import mkdocs.commands.serve
 import typer
 
-from .scripts import Generate, Update, commons
+from .scripts import Generate, commons
 from .utils import base, enum_clients, run_server
 
 __all__ = [
@@ -28,11 +28,6 @@ def callback() -> None:
 @app.command()
 def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = None) -> None:
     Generate.execute(option, project_name)
-
-
-@app.command()
-def update(option: Update.UpdateOptionsEnum) -> None:
-    Update.execute(option)
 
 
 @app.command()

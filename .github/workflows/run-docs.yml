@@ -1,0 +1,25 @@
+name: run-docs
+on:
+  workflow_call
+jobs:
+  install-deps:
+    uses: ./.github/workflows/install-python-deps.yml
+    with:
+      extras: stage
+  run-docs:
+    runs-on: ubuntu-latest
+    needs:
+      - install-deps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps-stage
+          path: .
+      - run: |
+          unzip venv.zip
+          sthali_cli generate docs
+          git config --global user.name 'jhunu.fernandes'
+          git config --global user.email 'jhunu.fernandes@gmail.com'
+          git commit -am "Automated docs"
+          git push
