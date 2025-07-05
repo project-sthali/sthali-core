@@ -20,6 +20,7 @@
 **Source**: [https://github.com/project-sthali/sthali-core/](https://github.com/project-sthali/sthali-core/)
 
 **Board**: [https://github.com/users/project-sthali/projects/1/](https://github.com/users/project-sthali/projects/1/)
+
 ---
 
 ### Requirements
@@ -74,6 +75,7 @@ This project has optional dependencies that can be installed for additional feat
 
 
 
+
 ---
 
 ### Instalation
@@ -91,6 +93,7 @@ git clone https://github.com/project-sthali/sthali-core.git
 cd sthali-core
 pip install .
 ```
+
 ---
 
 ### Usage

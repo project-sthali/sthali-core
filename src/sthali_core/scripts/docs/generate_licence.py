@@ -22,7 +22,7 @@ def main(pyproject_content: dict[str, typing.Any]) -> None:
     typer.echo("Generating license")
 
     typer.echo("Rendering the template with the data")
-    license_template: fastapi.templating.Jinja2Templates = TEMPLATES.get_template("license.md")  # type: ignore
+    license_template: fastapi.templating.Jinja2Templates = TEMPLATES.get_template("LICENSE")  # type: ignore
     license_content: str = license_template.render(  # type: ignore
         **pyproject_content,
         year=datetime.datetime.now().year,

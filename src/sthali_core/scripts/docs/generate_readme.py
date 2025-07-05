@@ -25,5 +25,6 @@ def main() -> None:
             with File(doc_file_path) as doc_file:
                 doc_file_content = doc_file.read()
                 readme_file.write(doc_file_content)
+                readme_file.write("\n")
 
     typer.echo("Generated readme")
