@@ -1,4 +1,4 @@
-name: trigger-docs
+name: docs
 on:
   push:
     branches:
