@@ -18,7 +18,7 @@ jobs:
           path: .
       - run: |
           unzip venv.zip
-          sthali_cli generate docs
+          .venv/bin/python -m sthali_core generate docs
           git config --global user.name 'jhunu.fernandes'
           git config --global user.email 'jhunu.fernandes@gmail.com'
           git commit -am "Automated docs"
