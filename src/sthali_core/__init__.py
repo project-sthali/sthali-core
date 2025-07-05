@@ -33,5 +33,5 @@ def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = No
 @app.command()
 def serve() -> None:
     typer.echo("Serving documentation...")
-    config_file_path = str(commons.BASE_DOCS_PATH / "mkdocs.yml")
+    config_file_path = str(commons.ROOT_PATH / "docs" / "mkdocs.yml")
     mkdocs.commands.serve.serve(config_file_path)  # type: ignore

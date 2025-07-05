@@ -6,18 +6,11 @@ Classes:
 """
 
 import enum
-import typing
 
-from .commons import read_pyproject
+from .commons import DOCS_PATH, ROOT_PATH, read_pyproject
+from .docs import BaseDocsGenerator
 from .docs.generate_docstring import main as main_docstring
-from .docs.generate_index_file import main as main_index
-from .docs.generate_installation import main as main_installation
-from .docs.generate_licence import main as main_licence
 from .docs.generate_mkdocs import main as main_mkdocs
-from .docs.generate_readme import main as main_readme
-from .docs.generate_requirements import main as main_requirements
-from .docs.generate_usage import main as main_usage
-from .project.generate_logo import main as main_logo
 from .project.generate_project import main as main_project
 
 
@@ -58,90 +51,72 @@ class Generate:
         usage = "usage"
 
     @staticmethod
-    def _run_after(
-        option: GenerateOptionsEnum,
-        pyproject_content: dict[str, typing.Any],
-        organization_name: str,
-        project_name: str | None = None,
-    ) -> None:
-        match option:
-            case Generate.GenerateOptionsEnum.project:
-                assert project_name is not None, "Project name is required for project"
-                main_logo(project_name)
-                main_licence(pyproject_content)
-
-            case _:
-                return
-
-    @staticmethod
-    def _run_before(
-        option: GenerateOptionsEnum,
-        pyproject_content: dict[str, typing.Any],
-        organization_name: str,
-        project_name: str | None = None,
-    ) -> None:
-        match option:
-            case Generate.GenerateOptionsEnum.mkdocs:
-                main_docstring()
-
-            case Generate.GenerateOptionsEnum.readme:
-                main_index(pyproject_content, organization_name)
-                main_requirements(pyproject_content)
-                main_installation(pyproject_content)
-                main_usage()
-
-            case _:
-                return
-
-    @staticmethod
     def execute(option: GenerateOptionsEnum, project_name: str | None = None) -> None:
         """Executes the option based on the provided arguments."""
         pyproject_content = read_pyproject()
         organization_name = "project-sthali"
-        Generate._run_before(option, pyproject_content, organization_name)
+        docs_generator = BaseDocsGenerator(pyproject_content, organization_name, project_name)
+
         match option:
             case Generate.GenerateOptionsEnum.docs:
-                main_licence(pyproject_content)
+                Generate.execute(Generate.GenerateOptionsEnum.licence)
 
-                main_index(pyproject_content, organization_name)
-                main_requirements(pyproject_content)
-                main_installation(pyproject_content, organization_name)
-                main_usage()
-                main_readme()
+                Generate.execute(Generate.GenerateOptionsEnum.index_file)
+                Generate.execute(Generate.GenerateOptionsEnum.requirements)
+                Generate.execute(Generate.GenerateOptionsEnum.installation)
+                Generate.execute(Generate.GenerateOptionsEnum.usage)
+                Generate.execute(Generate.GenerateOptionsEnum.readme)
 
-                main_docstring()
-                main_mkdocs(pyproject_content, organization_name)
+                Generate.execute(Generate.GenerateOptionsEnum.docstring)
+                Generate.execute(Generate.GenerateOptionsEnum.mkdocs)
 
             case Generate.GenerateOptionsEnum.docstring:
                 main_docstring()
 
             case Generate.GenerateOptionsEnum.index_file:
-                main_index(pyproject_content, organization_name)
+                docs_generator.render("index.md")
 
             case Generate.GenerateOptionsEnum.installation:
-                main_installation(pyproject_content, organization_name)
+                docs_generator.render("installation.md")
 
             case Generate.GenerateOptionsEnum.licence:
-                main_licence(pyproject_content)
+                docs_generator.render("license.md")
+                path = ROOT_PATH
+                docs_generator.render("LICENSE", path=path)
 
             case Generate.GenerateOptionsEnum.logo:
                 assert project_name is not None, "Project name is required for project"
-                main_logo(project_name)
+                path = DOCS_PATH / "images"
+                docs_generator.render("logo.svg", path=path)
 
             case Generate.GenerateOptionsEnum.mkdocs:
-                main_mkdocs(pyproject_content, organization_name)
+                Generate.execute(Generate.GenerateOptionsEnum.docstring)
+
+                # prerender mkdocs.yml
+                path = ROOT_PATH / "docs"
+                docs_generator.render("mkdocs.yml", path=path)
+
+                # append API references to mkdocs.yml
+                main_mkdocs()
 
             case Generate.GenerateOptionsEnum.project:
                 assert project_name is not None, "Project name is required for project"
                 main_project(project_name)
 
+                Generate.execute(Generate.GenerateOptionsEnum.logo)
+                Generate.execute(Generate.GenerateOptionsEnum.licence)
+
             case Generate.GenerateOptionsEnum.readme:
-                main_readme()
+                Generate.execute(Generate.GenerateOptionsEnum.index_file)
+                Generate.execute(Generate.GenerateOptionsEnum.requirements)
+                Generate.execute(Generate.GenerateOptionsEnum.installation)
+                Generate.execute(Generate.GenerateOptionsEnum.usage)
+
+                path = ROOT_PATH
+                docs_generator.concatenate("README.md", path=path)
 
             case Generate.GenerateOptionsEnum.requirements:
-                main_requirements(pyproject_content)
+                docs_generator.render("requirements.md")
 
             case Generate.GenerateOptionsEnum.usage:
-                main_usage()
-
-        Generate._run_after(option, pyproject_content, organization_name, project_name)
+                docs_generator.render("usage.md")

@@ -1,8 +1,7 @@
 """Script to generate Markdown documentation files from Python docstrings.
 
-This script introspects modules, classes, and functions in the project,
-extracts their docstrings and metadata, and writes them as Markdown files
-to the API reference directory.
+This script introspects modules, classes, and functions in the project, extracts their docstrings and metadata, and
+writes them as Markdown files to the API reference directory.
 """
 
 import importlib
@@ -10,20 +9,10 @@ import pathlib
 import types
 import typing
 
-import jinja2
 import pydantic
 import typer
 
-from ..commons import API_REFERENCE_PATH, PROJECT_SLUG, File, to_snake_case
-
-TEMPLATE = """{{ heading_level * '#' }} `{{ name }}`
-
-```
-{{ docstring }}
-```
-
-{% if sub %}{{ sub }}{% endif %}
-"""
+from ..commons import DOCS_PATH, ROOT_PATH, TEMPLATES, File, to_snake_case
 
 
 def get_metadata(obj: typing.Any) -> str | None:
@@ -82,10 +71,11 @@ def render(name: str, docstring: str, level: int = 3, sub: str | None = None) ->
     Returns:
         str: The rendered Markdown string.
     """
-    return jinja2.Template(TEMPLATE).render(
+    template = TEMPLATES.get_template("docstring.md")  # type: ignore
+    return template.render(  # type: ignore
         name=name,
         docstring=docstring,
-        heading_level=level,
+        heading_level=level * "#",
         sub=sub,
     )
 
@@ -172,6 +162,7 @@ def get_imports_from_module(module: types.ModuleType, level: int) -> list[Doc]:
         filename = _import.__name__
         sub = []
         import_type = get_import_type_mapping(_import) or ""
+        api_path = DOCS_PATH / "api"
         if import_type == "module":
             name = _import.__spec__.name
             sub = get_imports_from_module(_import, level + 1)
@@ -180,7 +171,7 @@ def get_imports_from_module(module: types.ModuleType, level: int) -> list[Doc]:
         docs.append(
             Doc(
                 name=name,
-                path=API_REFERENCE_PATH / f"{import_type}_{filename}.md",
+                path=api_path / f"{import_type}_{filename}.md",
                 docstring=get_docstring(_import),
                 level=level,
                 sub=sub,
@@ -195,17 +186,19 @@ def main() -> None:
     This function imports the project module, extracts docstrings from its exports,
     clears the API reference directory, and writes new documentation files.
     """
-    typer.echo(f"Generating docs for {PROJECT_SLUG}")
+    project_slug = to_snake_case(ROOT_PATH.name.split("/")[-1])
+    typer.echo(f"Generating docs for {project_slug}")
 
-    project_module = importlib.import_module(PROJECT_SLUG)
+    project_module = importlib.import_module(project_slug)
     heading_level = 3
     imports_from_module = get_imports_from_module(project_module, heading_level)
 
     typer.echo("Clearing API Reference folder")
-    for doc in API_REFERENCE_PATH.glob("*"):
+    api_path = DOCS_PATH / "api"
+    for doc in api_path.glob("*"):
         doc.unlink()
 
     for doc in imports_from_module:
         recursive_writer(doc)
 
-    typer.echo(f"Generated docs for {PROJECT_SLUG}")
+    typer.echo(f"Generated docs for {project_slug}")

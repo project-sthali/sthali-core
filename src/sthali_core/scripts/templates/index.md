@@ -16,10 +16,10 @@
     </a>
 </p>
 
-**Docs**: [https://{{ organization_name }}.github.io/{{ project['name'] }}/](https://{{ organization_name }}.github.io/{{ project['name'] }}/)
+**Docs**: [https://{{ organization_name }}.github.io/{{ project["name"] }}/](https://{{ organization_name }}.github.io/{{ project["name"] }}/)
 
-**PyPI**: [https://pypi.org/project/{{ project['name'] }}/](https://pypi.org/project/{{ project['name'] }}/)
+**PyPI**: [https://pypi.org/project/{{ project["name"] }}/](https://pypi.org/project/{{ project["name"] }}/)
 
-**Source**: [https://github.com/{{ organization_name }}/{{ project['name'] }}/](https://github.com/{{ organization_name }}/{{ project['name'] }}/)
+**Source**: [https://github.com/{{ organization_name }}/{{ project["name"] }}/](https://github.com/{{ organization_name }}/{{ project["name"] }}/)
 
 **Board**: [https://github.com/users/{{ organization_name }}/projects/1/](https://github.com/users/{{ organization_name }}/projects/1/)
