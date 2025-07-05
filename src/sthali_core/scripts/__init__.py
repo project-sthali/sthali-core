@@ -16,6 +16,7 @@ from .docs.generate_mkdocs import main as main_mkdocs
 from .docs.generate_readme import main as main_readme
 from .docs.generate_requirements import main as main_requirements
 from .docs.generate_usage import main as main_usage
+from .project.generate_logo import main as main_logo
 from .project.generate_project import main as main_project
 from .project.update_pyproject_dependencies import main as update_pyproject_dependencies
 
@@ -35,6 +36,8 @@ class Generate:
             docstring
             index-file
             installation
+            licence
+            logo
             mkdocs
             project
             readme
@@ -47,6 +50,7 @@ class Generate:
         index_file = "index-file"
         installation = "installation"
         licence = "licence"
+        logo = "logo"
         mkdocs = "mkdocs"
         project = "project"
         readme = "readme"
@@ -69,7 +73,7 @@ class Generate:
                 main_docstring()
                 main_mkdocs(pyproject_content, organization_name)
 
-                main_licence()
+                main_licence(pyproject_content)
 
             case Generate.GenerateOptionsEnum.docstring:
                 main_docstring()
@@ -81,15 +85,20 @@ class Generate:
                 main_installation(pyproject_content, organization_name)
 
             case Generate.GenerateOptionsEnum.licence:
-                main_licence()
+                main_licence(pyproject_content)
+
+            case Generate.GenerateOptionsEnum.logo:
+                assert project_name is not None, "Project name is required for project"
+                main_logo(project_name)
 
             case Generate.GenerateOptionsEnum.mkdocs:
                 main_mkdocs(pyproject_content, organization_name)
 
             case Generate.GenerateOptionsEnum.project:
-                assert project_name is None, "Project name is required for project"
+                assert project_name is not None, "Project name is required for project"
                 main_project(project_name)
-                main_licence()
+                main_logo(project_name)
+                main_licence(pyproject_content)
 
             case Generate.GenerateOptionsEnum.readme:
                 main_readme()

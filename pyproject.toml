@@ -38,6 +38,7 @@ dependencies = [
   "typer >= 0.16.0",
   "uvicorn >= 0.34.3",
 ]
+
 [project.urls]
 "Homepage" = "https://github.com/project-sthali/sthali-core"
 "Bug Tracker" = "https://github.com/project-sthali/sthali-core/issues"

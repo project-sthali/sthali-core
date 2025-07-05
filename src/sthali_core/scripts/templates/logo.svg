@@ -5,9 +5,9 @@
     zoomAndPan="magnify"
     preserveAspectRatio="xMidYMid meet"
     version="1.0"
-    width="13125"
+    width="{{ 3125 + 1000 * (project_name | length - 1) }}"
     height="3125"
-    viewBox="0 0 10593.75 2343.75"
+    viewBox="0 0 {{ 2343.75 + 750 * (project_name | length ) }} 2343.75"
 >
     <defs />
     <path
@@ -21,6 +21,6 @@
         x="2343.75"
         y="1562.5"
     >
-        sthali-core
+        {{ project_name }}
     </text>
 </svg>

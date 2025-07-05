@@ -64,7 +64,7 @@ PROJECT_NAME = ROOT_PATH.name.split("/")[-1]
 PROJECT_SLUG = to_snake_case(PROJECT_NAME)
 
 # templates
-TEMPLATES = fastapi.templating.Jinja2Templates(ROOT_PATH / "src" / "sthali_core" / "scripts" / "docs" / "templates")
+TEMPLATES = fastapi.templating.Jinja2Templates(ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates")
 
 class File:
     """A context manager class to handle file operations.
