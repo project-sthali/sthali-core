@@ -2,7 +2,7 @@ name: deploy
 on:
   workflow_run:
     workflows:
-      - docs
+      - tests
     branches:
       - main
     types:

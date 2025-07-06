@@ -1,12 +1,9 @@
 name: docs
 on:
-  workflow_run:
-    workflows:
-      - tests
+  push:
     branches:
       - main
-    types:
-      - completed
+      - development
 jobs:
   run-docs:
     uses: project-sthali/sthali-core/.github/workflows/run-docs.yml@development
