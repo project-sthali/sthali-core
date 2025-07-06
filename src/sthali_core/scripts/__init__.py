@@ -82,7 +82,7 @@ class Generate:
             case Generate.GenerateOptionsEnum.licence:
                 docs_generator.render("license.md")
                 path = ROOT_PATH
-                docs_generator.render("LICENSE", path=path)
+                docs_generator.render("license.md", path=path, new_file="LICENSE")
 
             case Generate.GenerateOptionsEnum.logo:
                 assert project_name is not None, "Project name is required for project"
