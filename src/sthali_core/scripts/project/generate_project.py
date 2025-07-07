@@ -1,7 +1,7 @@
 """Script to generate a new project using the Sthali Core cookiecutter template.
 
-This script clones the template, applies the project name and year, copies the generated content,
-and cleans up the temporary directory.
+This script clones the template, applies the project name and year, copies the generated content, and cleans up the
+temporary directory.
 """
 
 import datetime

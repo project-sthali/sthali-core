@@ -6,4 +6,5 @@ on:
       - development
 jobs:
   run-docs:
+    if: github.event.head_commit.message != 'Automated docs'
     uses: project-sthali/sthali-core/.github/workflows/run-docs.yml@development

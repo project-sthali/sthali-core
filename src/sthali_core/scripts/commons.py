@@ -2,19 +2,13 @@
 
 Variables:
     ROOT_PATH (pathlib.Path): The root path of the project.
-    README_FILE_PATH (pathlib.Path): The path to the README.md file.
-    BASE_DOCS_PATH (pathlib.Path): The base path to the docs directory.
     DOCS_PATH (pathlib.Path): The path to the docs directory.
-    API_REFERENCE_PATH (pathlib.Path): The path to the api directory.
-
-    PROJECT_NAME (str): The name of the project.
-    PROJECT_SLUG (str): The slug of the project.
-
-    TEMPLATES (fastapi.templating.Jinja2Templates): The Jinja2 templates for rendering.
+    TEMPLATES (fastapi.templating.Jinja2Templates): Jinja2 templates for rendering documentation.
 
 Functions:
     to_snake_case(string: str) -> str: Converts a given string to snake case.
-    read_pyproject() -> dict[str, typing.Any]: Reads the pyproject.toml file and returns its content as a dictionary.
+    read_pyproject(path: pathlib.Path | None) -> dict[str, typing.Any]: Reads the pyproject.toml file and returns its
+        content as a dictionary.
 
 Classes:
     File: A context manager class to handle file operations.
@@ -26,6 +20,24 @@ import typing
 
 import fastapi.templating
 import tomli
+
+ROOT_PATH = pathlib.Path.cwd()
+DOCS_PATH = ROOT_PATH / "docs" / "docs"
+TEMPLATES = fastapi.templating.Jinja2Templates(ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates")
+
+
+def read_pyproject(path: pathlib.Path | None = None) -> dict[str, typing.Any]:
+    """Reads the pyproject.toml file and returns its content as a dictionary.
+
+    Args:
+        path (pathlib.Path): The path to the pyproject.toml file. Defaults to None.
+
+    Returns:
+        dict[str, typing.Any]: The content of the pyproject.toml file as a dictionary
+    """
+    path = path or ROOT_PATH / "pyproject.toml"
+    with File(path) as pyproject_file:
+        return tomli.loads(pyproject_file.read())
 
 
 def to_snake_case(string: str) -> str:
@@ -41,30 +53,6 @@ def to_snake_case(string: str) -> str:
     s2 = re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1)
     return re.sub(r"-", "_", s2).lower()
 
-
-def read_pyproject() -> dict[str, typing.Any]:
-    """Reads the pyproject.toml file and returns its content as a dictionary.
-
-    Returns:
-        dict[str, typing.Any]: The content of the pyproject.toml file as a dictionary
-    """
-    with File(ROOT_PATH / "pyproject.toml") as pyproject_file:
-        return tomli.loads(pyproject_file.read())
-
-
-# paths
-ROOT_PATH = pathlib.Path.cwd()
-README_FILE_PATH = ROOT_PATH / "README.md"
-BASE_DOCS_PATH = ROOT_PATH / "docs"
-DOCS_PATH = BASE_DOCS_PATH / "docs"
-API_REFERENCE_PATH = DOCS_PATH / "api"
-
-# project metadata
-PROJECT_NAME = ROOT_PATH.name.split("/")[-1]
-PROJECT_SLUG = to_snake_case(PROJECT_NAME)
-
-# templates
-TEMPLATES = fastapi.templating.Jinja2Templates(ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates")
 
 class File:
     """A context manager class to handle file operations.
