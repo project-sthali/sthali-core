@@ -3,7 +3,7 @@ on:
   workflow_call
 jobs:
   install-deps:
-    uses: ./.github/workflows/install-python-deps.yml
+    uses: project-sthali/sthali-core/.github/workflows/install-python-deps.yml@main
     with:
       extras: stage
   run-docs:
