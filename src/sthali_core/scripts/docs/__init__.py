@@ -54,7 +54,9 @@ class BaseDocsGenerator:
 
         typer.echo(f"Generated {file}")
 
-    def render(self, file: str, path: pathlib.Path | None = None, new_file: str | None = None, **kwargs: typing.Any) -> None:
+    def render(
+        self, file: str, path: pathlib.Path | None = None, new_file: str | None = None, **kwargs: typing.Any,
+    ) -> None:
         """Generate documentation file.
 
         This method renders a template file with the provided data and writes it to the specified path.
