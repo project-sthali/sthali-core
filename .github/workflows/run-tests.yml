@@ -16,6 +16,9 @@ jobs:
         with:
           name: python-deps-${{ github.event_name == 'push' && 'stage' || 'tests' }}
           path: .
-      - run: |
+      - name: unpack venv
+        run: |
           unzip venv.zip
+      - name: unittest
+        run: |
           .venv/bin/python -m unittest discover -v
