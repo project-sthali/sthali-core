@@ -6,4 +6,4 @@ on:
       - development
 jobs:
   run-docs:
-    uses: project-sthali/sthali-core/.github/workflows/run-docs.yml@development
+    uses: project-sthali/sthali-core/.github/workflows/run-docs.yml@main

@@ -19,8 +19,11 @@ jobs:
         with:
           name: python-deps-stage
           path: .
-      - run: |
+      - name: unpack venv
+        run: |
           unzip venv.zip
+      - name: build
+        run: |
           .venv/bin/python -m build -o ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
   gh-pages-deploy:
@@ -33,6 +36,9 @@ jobs:
         with:
           name: python-deps-stage
           path: .
-      - run: |
+      - name: unpack venv
+        run: |
           unzip venv.zip
+      - name: mkdocs gh-deploy
+        run: |
           .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml

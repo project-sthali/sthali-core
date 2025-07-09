@@ -9,4 +9,4 @@ on:
       - completed
 jobs:
   run-deploy:
-    uses: project-sthali/sthali-core/.github/workflows/run-deploy.yml@development
+    uses: project-sthali/sthali-core/.github/workflows/run-deploy.yml@main

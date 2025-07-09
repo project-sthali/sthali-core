@@ -13,10 +13,17 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: |
+      - name: venv
+        run: |
           python -m venv .venv
+      - name: upgrade pip
+        run: |
           .venv/bin/python -m pip install --upgrade pip
+      - name: pip install
+        run: |
           .venv/bin/python -m pip install .[${{ inputs.extras }}]
+      - name: zip venv
+        run: |
           zip -r venv.zip .venv
       - uses: actions/upload-artifact@v4
         with:
