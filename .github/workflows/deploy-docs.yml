@@ -1,0 +1,25 @@
+name: deploy-docs
+on:
+  workflow_run:
+    workflows:
+      - run-docs
+    branches:
+      - main
+    types:
+      - completed
+jobs:
+  gh-pages-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-deps-stage
+          path: .
+      - name: unpack venv
+        run: |
+          unzip venv.zip
+      - name: mkdocs gh-deploy
+        run: |
+          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml

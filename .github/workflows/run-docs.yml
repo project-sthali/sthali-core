@@ -16,11 +16,18 @@ jobs:
         with:
           name: python-deps-stage
           path: .
-      - run: |
+      - name: unpack venv
+        run: |
           unzip venv.zip
+      - name: generate docs
+        run: |
           .venv/bin/python -m sthali_core generate docs
+      - name: git config
+        run: |
           git config --global user.name 'jhunu.fernandes'
           git config --global user.email 'jhunu.fernandes@gmail.com'
+      - name: git commit
+        run: |
           git add docs/
           if ! git diff --cached --quiet; then
             git commit -am "Automated docs"

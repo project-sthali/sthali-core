@@ -1,24 +1,46 @@
+# name: run-tests
+# on:
+#   workflow_call
+# jobs:
+#   install-deps:
+#     uses: project-sthali/sthali-core/.github/workflows/install-python-deps.yml@main
+#     with:
+#       extras: ${{ github.event_name == 'push' && 'stage' || 'tests' }}
+#   run-tests:
+#     runs-on: ubuntu-latest
+#     needs:
+#       - install-deps
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/download-artifact@v4
+#         with:
+#           name: python-deps-${{ github.event_name == 'push' && 'stage' || 'tests' }}
+#           path: .
+#       - name: unpack venv
+#         run: |
+#           unzip venv.zip
+#       - name: unittest
+#         run: |
+#           .venv/bin/python -m unittest discover -v
+
 name: run-tests
 on:
   workflow_call
 jobs:
-  install-deps:
-    uses: project-sthali/sthali-core/.github/workflows/install-python-deps.yml@main
-    with:
-      extras: ${{ github.event_name == 'push' && 'stage' || 'tests' }}
   run-tests:
     runs-on: ubuntu-latest
-    needs:
-      - install-deps
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: project-sthali/sthali-core/.github/workflows/install-python-deps.yml@main
         with:
-          name: python-deps-${{ github.event_name == 'push' && 'stage' || 'tests' }}
-          path: .
-      - name: unpack venv
-        run: |
-          unzip venv.zip
+          extras: ${{ github.event_name == 'push' && 'stage' || 'tests' }}
+      # - uses: actions/checkout@v4
+      # - uses: actions/download-artifact@v4
+      #   with:
+      #     name: python-deps-${{ github.event_name == 'push' && 'stage' || 'tests' }}
+      #     path: .
+      # - name: unpack venv
+      #   run: |
+      #     unzip venv.zip
       - name: unittest
         run: |
           .venv/bin/python -m unittest discover -v

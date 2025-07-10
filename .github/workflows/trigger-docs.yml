@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - development
 jobs:
   run-docs:
     if: github.event.head_commit.message != 'Automated docs'
