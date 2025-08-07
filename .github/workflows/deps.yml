@@ -27,7 +27,7 @@ jobs:
           .venv/bin/python -m pip install .[${{ inputs.pip_args }}]
       - run: |
           zip -r venv.zip .venv
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: python-deps-${{ inputs.pip_args }}
-      #     path: venv.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-deps-${{ inputs.pip_args }}
+          path: venv.zip
