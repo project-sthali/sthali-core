@@ -1,0 +1,43 @@
+name: docs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-docs:
+    if: github.event.head_commit.message != 'Automated docs'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install .[stage]
+      - run: |
+          .venv/bin/python -m sthali_core generate docs
+      - run: |
+          git config --global user.name 'jhunu.fernandes'
+          git config --global user.email 'jhunu.fernandes@gmail.com'
+      - run: |
+          git add docs/
+          if ! git diff --cached --quiet; then
+            git commit -am "Automated docs"
+            git push
+          fi
+  deploy-docs:
+    if: github.event.head_commit.message == 'Automated docs'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install .[stage]
+      - run: |
+          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml
