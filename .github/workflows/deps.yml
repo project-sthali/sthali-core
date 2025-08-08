@@ -14,23 +14,23 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - uses: actions/cache@v4
-        id: cache-pip
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - if: steps.cache-pip.outputs.cache-hit != 'true'
-        run: |
+      # - uses: actions/cache@v4
+      #   id: cache-pip
+      #   with:
+      #     path: ~/.cache/pip
+      #     key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pip-
+      # - if: steps.cache-pip.outputs.cache-hit != 'true'
+      - run: |
           python -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
           .venv/bin/python -m pip install .[${{ inputs.pip_args }}]
-      - if: steps.cache-pip.outputs.cache-hit != 'true'
-        run: |
+      # - if: steps.cache-pip.outputs.cache-hit != 'true'
+      - run: |
           zip -r venv.zip .venv
-      - if: steps.cache-pip.outputs.cache-hit != 'true'
-        uses: actions/upload-artifact@v4
+      # - if: steps.cache-pip.outputs.cache-hit != 'true'
+      - uses: actions/upload-artifact@v4
         with:
           name: python-deps-${{ inputs.pip_args }}
           path: venv.zip
