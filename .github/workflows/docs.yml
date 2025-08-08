@@ -6,8 +6,6 @@ on:
       - development
 permissions:
   contents: write
-  pages: write
-  id-token: write
 jobs:
   install-deps:
     uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
@@ -16,7 +14,7 @@ jobs:
   build-docs:
     needs:
       - install-deps
-    # if: github.event.head_commit.message != 'Automated docs'
+    if: github.event.head_commit.message != 'Automated docs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,28 +26,26 @@ jobs:
           unzip venv.zip
       - run: |
           .venv/bin/python -m sthali_core generate docs
-          .venv/bin/python -m mkdocs build -f docs/mkdocs.yml
-          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml
-      # - run: |
-      #     git config --global user.name 'jhunu.fernandes'
-      #     git config --global user.email 'jhunu.fernandes@gmail.com'
-      # - run: |
-      #     git add docs/
-      #     if ! git diff --cached --quiet; then
-      #       git commit -am "Automated docs"
-      #       git push
-      #     fi
+      - run: |
+          git config --global user.name github-actions[bot]
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - run: |
+          git add docs/
+          if ! git diff --cached --quiet; then
+            git commit -am "Automated docs"
+            git push
+          fi
   deploy-docs:
     needs:
       - build-docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
-          ref: gh-pages
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      - uses: actions/deploy-pages@v4
-        id: deployment
+          name: python-deps-stage
+          path: .
+      - run: |
+          unzip venv.zip
+      - run: |
+          .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml
