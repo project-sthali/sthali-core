@@ -26,9 +26,11 @@ jobs:
           python -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
           .venv/bin/python -m pip install .[${{ inputs.pip_args }}]
-      - run: |
+      - if: steps.cache-pip.outputs.cache-hit != 'true'
+        run: |
           zip -r venv.zip .venv
-      - uses: actions/upload-artifact@v4
+      - if: steps.cache-pip.outputs.cache-hit != 'true'
+        uses: actions/upload-artifact@v4
         with:
           name: python-deps-${{ inputs.pip_args }}
           path: venv.zip
