@@ -35,7 +35,7 @@ def read_pyproject(path: pathlib.Path | None = None) -> dict[str, typing.Any]:
     Returns:
         dict[str, typing.Any]: The content of the pyproject.toml file as a dictionary
     """
-    path = path or ROOT_PATH / "pyproject.toml"
+    path = ROOT_PATH / "pyproject.toml" or path
     with File(path) as pyproject_file:
         return tomli.loads(pyproject_file.read())
 

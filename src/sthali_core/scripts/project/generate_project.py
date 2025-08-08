@@ -24,7 +24,7 @@ def main(project_name: str) -> None:
         "https://github.com/project-sthali/sthali-core",
         no_input=True,
         overwrite_if_exists=True,
-        extra_context={"project_name": project_name, "year": datetime.datetime.now(datetime.tzinfo()).year},
+        extra_context={"project_name": project_name, "year": datetime.datetime.now(datetime.timezone.utc).year},
     )
 
     typer.echo("Copying content from temp directory")
