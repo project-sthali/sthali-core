@@ -43,4 +43,5 @@ jobs:
           name: python-deps-stage
           path: .
       - run: |
+          .venv/bin/python -m mkdocs build -f docs/mkdocs.yml
           .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml

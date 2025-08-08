@@ -5,6 +5,7 @@ Classes:
     Generate: The class that executes the commands based on the provided arguments.
 """
 
+import datetime
 import enum
 
 from .commons import DOCS_PATH, ROOT_PATH, read_pyproject
@@ -80,21 +81,20 @@ class Generate:
                 docs_generator.render("installation.md")
 
             case Generate.GenerateOptionsEnum.licence:
-                docs_generator.render("license.md")
-                path = ROOT_PATH
-                docs_generator.render("license.md", path=path, new_file="LICENSE")
+                year = datetime.datetime.now(datetime.timezone.utc).year
+                docs_generator.render("license.md", year=year)
+                docs_generator.render("license.md", ROOT_PATH, "LICENSE", year=year)
 
             case Generate.GenerateOptionsEnum.logo:
                 assert project_name is not None, "Project name is required for project"
                 path = DOCS_PATH / "images"
-                docs_generator.render("logo.svg", path=path)
+                docs_generator.render("logo.svg", path)
 
             case Generate.GenerateOptionsEnum.mkdocs:
                 Generate.execute(Generate.GenerateOptionsEnum.docstring)
 
                 # prerender mkdocs.yml
-                path = ROOT_PATH / "docs"
-                docs_generator.render("mkdocs.yml", path=path)
+                docs_generator.render("mkdocs.yml", ROOT_PATH / "docs")
 
                 # append API references to mkdocs.yml
                 main_mkdocs()
@@ -112,8 +112,7 @@ class Generate:
                 Generate.execute(Generate.GenerateOptionsEnum.installation)
                 Generate.execute(Generate.GenerateOptionsEnum.usage)
 
-                path = ROOT_PATH
-                docs_generator.concatenate("README.md", path=path)
+                docs_generator.concatenate("README.md", ROOT_PATH)
 
             case Generate.GenerateOptionsEnum.requirements:
                 docs_generator.render("requirements.md")

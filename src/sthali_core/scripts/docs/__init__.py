@@ -43,7 +43,7 @@ class BaseDocsGenerator:
 
         typer.echo(f"Writing {file}")
         path = path or DOCS_PATH
-        with File(DOCS_PATH / file, "w") as f:
+        with File(path / file, "w") as f:
             for file_to_concatenate in [
                 DOCS_PATH / f"{i}.md" for i in ["index", "requirements", "installation", "usage"]
             ]:
@@ -79,9 +79,9 @@ class BaseDocsGenerator:
         )
 
         file = new_file or file
-        typer.echo(f"Writing {file}")
         path = path or DOCS_PATH
-        with File(DOCS_PATH / file, "w") as f:
+        typer.echo(f"Writing {path / file}")
+        with File(path / file, "w") as f:
             f.write(content)
 
         typer.echo(f"Generated {file}")
