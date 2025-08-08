@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 jobs:
   install-deps:
     uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
