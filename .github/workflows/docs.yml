@@ -4,18 +4,23 @@ on:
     branches:
       - main
 jobs:
+  install-deps:
+    uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
+    with:
+      pip_args: stage
   build-docs:
+    needs:
+      - install-deps
     if: github.event.head_commit.message != 'Automated docs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/download-artifact@v4
         with:
-          python-version: 3.x
+          name: python-deps-stage
+          path: .
       - run: |
-          python -m venv .venv
-          .venv/bin/python -m pip install --upgrade pip
-          .venv/bin/python -m pip install .[stage]
+          unzip venv.zip
       - run: |
           .venv/bin/python -m sthali_core generate docs
       - run: |
@@ -28,16 +33,14 @@ jobs:
             git push
           fi
   deploy-docs:
-    if: github.event.head_commit.message == 'Automated docs'
+    needs:
+      - build-docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/download-artifact@v4
         with:
-          python-version: 3.x
-      - run: |
-          python -m venv .venv
-          .venv/bin/python -m pip install --upgrade pip
-          .venv/bin/python -m pip install .[stage]
+          name: python-deps-stage
+          path: .
       - run: |
           .venv/bin/python -m mkdocs gh-deploy -f docs/mkdocs.yml

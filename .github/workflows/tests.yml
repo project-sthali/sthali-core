@@ -9,18 +9,15 @@ on:
       - main
 jobs:
   install-deps:
-    uses: project-sthali/sthali-core/.github/workflows/deps.yml@development
+    uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
     with:
       pip_args: tests
   run-tests:
-    runs-on: ubuntu-latest
     needs:
       - install-deps
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
       - uses: actions/download-artifact@v4
         with:
           name: python-deps-tests
