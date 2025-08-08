@@ -3,10 +3,11 @@ on:
   workflow_call:
     inputs:
       pip_args:
-        required: true
+        required: false
         type: string
 jobs:
   install-python-deps:
+    if: inputs.pip_args
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
