@@ -5,14 +5,14 @@
     <em>{{ project["description"] | safe }}</em>
 </p>
 <p align="center">
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-tests.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-tests.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/tests.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/tests.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-deploy.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-deploy.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/deploy.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/deploy.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-docs.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-docs.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml/badge.svg" alt="">
     </a>
 </p>
 
