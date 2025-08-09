@@ -1,18 +1,18 @@
 <p align="center">
-    <a href="/sthali-core/images/sthali-core.svg">
-        <img src="/sthali-core/images/sthali-core.svg" alt="sthali-core" height="35%">
+    <a href="https://project-sthali.github.io/sthali-core/images/sthali-core.svg">
+        <img src="https://project-sthali.github.io/sthali-core/images/sthali-core.svg" alt="sthali-core" height="35%">
     </a>
     <em>A core package for Sthali development</em>
 </p>
 <p align="center">
-    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-tests.yml" target="_blank">
-        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-tests.yml/badge.svg" alt="">
+    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/tests.yml" target="_blank">
+        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/tests.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-deploy.yml" target="_blank">
-        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-deploy.yml/badge.svg" alt="">
+    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/deploy.yml" target="_blank">
+        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/deploy.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-docs.yml" target="_blank">
-        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/trigger-docs.yml/badge.svg" alt="">
+    <a href="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml" target="_blank">
+        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml/badge.svg" alt="">
     </a>
 </p>
 

@@ -43,7 +43,8 @@ class BaseDocsGenerator:
 
         typer.echo(f"Writing {file}")
         path = path or DOCS_PATH
-        with File(path / file, "w") as f:
+        full_path = path / file
+        with File(full_path, "w") as f:
             for file_to_concatenate in [
                 DOCS_PATH / f"{i}.md" for i in ["index", "requirements", "installation", "usage"]
             ]:
@@ -52,7 +53,7 @@ class BaseDocsGenerator:
                     f.write(_f.read())
                     f.write("\n")
 
-        typer.echo(f"Generated {file}")
+        typer.echo(f"Generated {full_path}")
 
     def render(
         self, file: str, path: pathlib.Path | None = None, new_file: str | None = None, **kwargs: typing.Any,
@@ -80,8 +81,9 @@ class BaseDocsGenerator:
 
         file = new_file or file
         path = path or DOCS_PATH
-        typer.echo(f"Writing {path / file}")
-        with File(path / file, "w") as f:
+        full_path = path / file
+        typer.echo(f"Writing {full_path}")
+        with File(full_path, "w") as f:
             f.write(content)
 
-        typer.echo(f"Generated {file}")
+        typer.echo(f"Generated {full_path}")

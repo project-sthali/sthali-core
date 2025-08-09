@@ -1,18 +1,18 @@
 <p align="center">
-    <a href="/{{ project['name'] }}/images/{{ project['name'] }}.svg">
-        <img src="/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}" height="35%">
+    <a href="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg">
+        <img src="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}" height="35%">
     </a>
     <em>{{ project["description"] | safe }}</em>
 </p>
 <p align="center">
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-tests.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-tests.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/tests.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/tests.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-deploy.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-deploy.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/deploy.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/deploy.yml/badge.svg" alt="">
     </a>
-    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-docs.yml" target="_blank">
-        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/trigger-docs.yml/badge.svg" alt="">
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml" target="_blank">
+        <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml/badge.svg" alt="">
     </a>
 </p>
 
