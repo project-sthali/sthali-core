@@ -26,7 +26,7 @@ jobs:
           git config --global user.name github-actions[bot]
           git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
       - run: |
-          git tag ${{ needs.get-release-version.outputs.release_version }}
+          git tag --force v${{ needs.get-release-version.outputs.release_version }}
           git push
         id: tag-id
   run-release:
