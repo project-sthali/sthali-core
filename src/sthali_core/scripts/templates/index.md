@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="/{{ project['name'] }}/images/{{ project['name'] }}.svg">
-        <img src="/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}" height="35%">
+    <a href="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg">
+        <img src="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}" height="35%">
     </a>
     <em>{{ project["description"] | safe }}</em>
 </p>
