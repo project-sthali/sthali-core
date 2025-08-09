@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-permissions:
-  contents: write
 jobs:
   install-deps:
     uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
@@ -14,6 +12,8 @@ jobs:
     needs:
       - install-deps
     if: github.event.head_commit.message != 'Automated docs'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
