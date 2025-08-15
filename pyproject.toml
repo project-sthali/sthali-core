@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "sthali-core"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name = "Jhunu Fernandes", email = "jhunu.fernandes@gmail.com" },
 ]
