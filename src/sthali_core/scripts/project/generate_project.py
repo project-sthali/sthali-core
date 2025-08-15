@@ -10,6 +10,8 @@ import subprocess
 import cookiecutter.main  # type: ignore
 import typer
 
+from ..commons import to_snake_case
+
 
 def main(project_name: str) -> None:
     """Generate a new project using the Sthali Core cookiecutter template.
@@ -24,7 +26,11 @@ def main(project_name: str) -> None:
         "https://github.com/project-sthali/sthali-core",
         no_input=True,
         overwrite_if_exists=True,
-        extra_context={"project_name": project_name, "year": datetime.datetime.now(datetime.timezone.utc).year},
+        extra_context={
+            "project_name": project_name,
+            "project_slug": to_snake_case(project_name),
+            "year": datetime.datetime.now(datetime.timezone.utc).year,
+        },
     )
 
     typer.echo("Copying content from temp directory")
