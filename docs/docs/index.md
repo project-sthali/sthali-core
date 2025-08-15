@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://project-sthali.github.io/sthali-core/images/sthali-core.svg">
-        <img src="https://project-sthali.github.io/sthali-core/images/sthali-core.svg" alt="sthali-core" height="35%">
+        <img src="https://project-sthali.github.io/sthali-core/images/sthali-core.svg" alt="sthali-core">
     </a>
     <em>A core package for Sthali development</em>
 </p>
@@ -13,6 +13,15 @@
     </a>
     <a href="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml" target="_blank">
         <img src="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml/badge.svg" alt="">
+    </a>
+</p>
+
+<p align="center">
+    <a href="https://project-sthali.github.io/sthali-core/license/" target="_blank">
+        <img alt="License" src="https://img.shields.io/github/license/project-sthali/sthali-core">
+    </a>
+    <a href="https://github.com/project-sthali/sthali-core/releases" target="_blank">
+        <img alt="Release" src="https://img.shields.io/github/v/release/project-sthali/sthali-core">
     </a>
 </p>
 
