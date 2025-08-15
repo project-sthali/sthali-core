@@ -31,6 +31,7 @@ def main(project_name: str) -> None:
             "project_slug": to_snake_case(project_name),
             "year": datetime.datetime.now(datetime.timezone.utc).year,
         },
+        checkout="development",
     )
 
     typer.echo("Copying content from temp directory")
