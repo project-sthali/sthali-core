@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg">
-        <img src="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}" height="35%">
+        <img src="https://{{ organization_name }}.github.io/{{ project['name'] }}/images/{{ project['name'] }}.svg" alt="{{ project['name'] }}">
     </a>
     <em>{{ project["description"] | safe }}</em>
 </p>
@@ -13,6 +13,15 @@
     </a>
     <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml" target="_blank">
         <img src="https://github.com/{{ organization_name }}/{{ project['name'] }}/actions/workflows/docs.yml/badge.svg" alt="">
+    </a>
+</p>
+
+<p align="center">
+    <a href="https://{{ organization_name }}.github.io/{{ project['name'] }}/license/" target="_blank">
+        <img alt="License" src="https://img.shields.io/github/license/{{ organization_name }}/{{ project['name'] }}">
+    </a>
+    <a href="https://github.com/{{ organization_name }}/{{ project['name'] }}/releases" target="_blank">
+        <img alt="Release" src="https://img.shields.io/github/v/release/{{ organization_name }}/{{ project['name'] }}">
     </a>
 </p>
 

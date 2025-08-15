@@ -11,6 +11,8 @@ import typer
 
 from ..commons import DOCS_PATH, TEMPLATES, File
 
+ORGANIZATION_NAME = "project-sthali"
+
 
 class BaseDocsGenerator:
     """Base class for documentation generators."""
@@ -29,7 +31,7 @@ class BaseDocsGenerator:
             project_name (str | None): The name of the project. Defaults to None.
         """
         self.pyproject_content = pyproject_content
-        self.organization_name = organization_name
+        self.organization_name = organization_name or ORGANIZATION_NAME
         self.project_name = project_name
 
     def concatenate(self, file: str, path: pathlib.Path | None = None) -> None:
