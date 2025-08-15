@@ -2,7 +2,7 @@ name: docs
 on:
   push:
     branches:
-      - main
+      - development
 jobs:
   install-deps:
     uses: project-sthali/sthali-core/.github/workflows/deps.yml@main
