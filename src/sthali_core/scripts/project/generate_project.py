@@ -5,13 +5,11 @@ temporary directory.
 """
 
 import datetime
-import pathlib
-import subprocess
 
 import cookiecutter.main  # type: ignore
 import typer
 
-from ..commons import to_snake_case
+from ..commons import TEMPLATES_PATH, to_snake_case
 
 
 def main(project_name: str) -> None:
@@ -24,8 +22,7 @@ def main(project_name: str) -> None:
 
     typer.echo("Cloning template")
     cookiecutter.main.cookiecutter(  # type: ignore
-        "https://github.com/project-sthali/sthali-core",
-        checkout="development",
+        str(TEMPLATES_PATH / "cookiecutter"),
         no_input=True,
         extra_context={
             "project_name": project_name,
@@ -33,16 +30,4 @@ def main(project_name: str) -> None:
             "year": datetime.datetime.now(datetime.timezone.utc).year,
         },
         overwrite_if_exists=True,
-        output_dir="../../teste/",
-        config_file="src/sthali_core/scripts/templates/cookiecutter/cookiecutter.json",
     )
-
-    typer.echo("Copying content from temp directory")
-    subprocess.call(["cp", "-r", f"./{project_name}/", "."])
-
-    typer.echo("Deleting temp directory")
-    subprocess.call(["rm", "-rf", f"./{project_name}"])
-
-
-if __name__ == "__main__":
-    main("sthali-teste")
