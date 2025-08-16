@@ -81,6 +81,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "src/sthali_core/scripts/__init__.py" = [
   "C901",  # complex-structure
+  "PLR0915",  # too-many-statements
   "S101",  # assert
 ]
 "src/sthali_core/scripts/project/generate_project.py" = [

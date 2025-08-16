@@ -3,6 +3,7 @@
 Provides Typer CLI commands for generating, updating, and serving documentation and projects.
 """
 
+import mkdocs.commands.serve
 import typer
 
 from .scripts import Generate, commons
@@ -31,8 +32,6 @@ def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = No
 
 @app.command()
 def serve() -> None:
-    import mkdocs.commands.serve
-
     typer.echo("Serving documentation...")
 
     config_file_path = str(commons.ROOT_PATH / "docs" / "mkdocs.yml")
