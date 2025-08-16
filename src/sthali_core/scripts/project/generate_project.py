@@ -34,7 +34,7 @@ def main(project_name: str) -> None:
         },
         overwrite_if_exists=True,
         output_dir="../../teste/",
-        # config_file="../tempß§lates/cookiecutter/cookiecutter.json",
+        config_file="../templates/cookiecutter/cookiecutter.json",
     )
 
     typer.echo("Copying content from temp directory")
