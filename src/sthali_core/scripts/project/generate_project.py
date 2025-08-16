@@ -5,6 +5,7 @@ temporary directory.
 """
 
 import datetime
+import pathlib
 import subprocess
 
 import cookiecutter.main  # type: ignore
@@ -25,13 +26,14 @@ def main(project_name: str) -> None:
     cookiecutter.main.cookiecutter(  # type: ignore
         "https://github.com/project-sthali/sthali-core",
         no_input=True,
-        overwrite_if_exists=True,
         extra_context={
             "project_name": project_name,
             "project_slug": to_snake_case(project_name),
             "year": datetime.datetime.now(datetime.timezone.utc).year,
         },
-        checkout="development",
+        overwrite_if_exists=True,
+        output_dir="../../teste/",
+        # config_file="../tempß§lates/cookiecutter/cookiecutter.json",
     )
 
     typer.echo("Copying content from temp directory")
@@ -39,3 +41,7 @@ def main(project_name: str) -> None:
 
     typer.echo("Deleting temp directory")
     subprocess.call(["rm", "-rf", f"./{project_name}"])
+
+
+if __name__ == "__main__":
+    main("sthali-teste")
