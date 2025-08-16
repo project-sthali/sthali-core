@@ -25,6 +25,7 @@ def main(project_name: str) -> None:
     typer.echo("Cloning template")
     cookiecutter.main.cookiecutter(  # type: ignore
         "https://github.com/project-sthali/sthali-core",
+        checkout="development",
         no_input=True,
         extra_context={
             "project_name": project_name,
