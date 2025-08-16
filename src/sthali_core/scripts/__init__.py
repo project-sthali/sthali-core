@@ -114,7 +114,7 @@ class Generate:
                 assert project_name is not None, "Project name is required for project"
                 main_project(project_name)
 
-                Generate.execute(Generate.GenerateOptionsEnum.logo)
+                Generate.execute(Generate.GenerateOptionsEnum.logo, project_name)
                 Generate.execute(Generate.GenerateOptionsEnum.licence)
 
             case Generate.GenerateOptionsEnum.readme:

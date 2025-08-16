@@ -23,7 +23,8 @@ import tomli
 
 ROOT_PATH = pathlib.Path.cwd()
 DOCS_PATH = ROOT_PATH / "docs" / "docs"
-TEMPLATES = fastapi.templating.Jinja2Templates(ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates")
+TEMPLATES_PATH = ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates"
+TEMPLATES = fastapi.templating.Jinja2Templates(TEMPLATES_PATH)
 
 
 def read_pyproject(path: pathlib.Path | None = None) -> dict[str, typing.Any]:

@@ -48,6 +48,8 @@ This project requires the following Python packages with specific versions:
 
 - `fastapi >= 0.115.13`
 
+- `mkdocs >= 1.6.1`
+
 - `pydantic >= 2.11.7`
 
 - `PyYAML >= 6.0.2`
@@ -67,8 +69,6 @@ This project has optional dependencies that can be installed for additional feat
 
 - `coverage[toml] >= 7.9.1`
 
-- `mkdocs >= 1.6.1`
-
 - `ruff >= 0.12.0`
 
 
@@ -82,8 +82,6 @@ This project has optional dependencies that can be installed for additional feat
 - `build >= 1.2.1`
 
 - `coverage[toml] >= 7.9.1`
-
-- `mkdocs >= 1.6.1`
 
 
 
