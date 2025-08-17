@@ -12,7 +12,7 @@
         <img src="https://github.com/project-sthali/sthali-core/actions/workflows/deploy.yml/badge.svg" alt="">
     </a>
     <a href="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml" target="_blank">
-        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml/badge.svg" alt="">
+        <img src="https://github.com/project-sthali/sthali-core/actions/workflows/docs.yml/badge.svg?branch=development" alt="">
     </a>
 </p>
 
