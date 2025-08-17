@@ -21,7 +21,7 @@ import typing
 import fastapi.templating
 import tomli
 
-ROOT_PATH = pathlib.Path.cwd()
+ROOT_PATH = pathlib.Path()
 DOCS_PATH = ROOT_PATH / "docs" / "docs"
 TEMPLATES_PATH = ROOT_PATH / "src" / "sthali_core" / "scripts" / "templates"
 TEMPLATES = fastapi.templating.Jinja2Templates(TEMPLATES_PATH)

@@ -186,7 +186,7 @@ def main() -> None:
     This function imports the project module, extracts docstrings from its exports,
     clears the API reference directory, and writes new documentation files.
     """
-    project_slug = to_snake_case(ROOT_PATH.name.split("/")[-1])
+    project_slug = to_snake_case(str(ROOT_PATH.absolute()).split("/")[-1])
     typer.echo(f"Generating docs for {project_slug}")
 
     project_module = importlib.import_module(project_slug)
