@@ -26,6 +26,11 @@ def callback() -> None:
 
 
 @app.command()
+def deploy() -> None:
+    pass
+
+
+@app.command()
 def generate(option: Generate.GenerateOptionsEnum, project_name: str | None = None) -> None:
     Generate.execute(option, project_name)
 
