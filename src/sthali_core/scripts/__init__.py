@@ -96,7 +96,7 @@ class Generate:
 
                 assert project_name is not None, "Project name is required for project"
                 path = DOCS_PATH / "images"
-                docs_generator.render("logo.svg", path)
+                docs_generator.render("logo.svg", path, f"{project_name}.svg")
 
             case Generate.GenerateOptionsEnum.mkdocs:
                 pyproject_content = read_pyproject()
