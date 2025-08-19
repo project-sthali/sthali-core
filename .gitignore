@@ -12,5 +12,8 @@ dist
 # Cache directories
 *_cache
 
+# Vscode
+.vscode
+
 # Docs static files
 docs/site
