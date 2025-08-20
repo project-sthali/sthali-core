@@ -12,7 +12,7 @@ import typing
 import pydantic
 import typer
 
-from ..commons import DOCS_PATH, ROOT_PATH, TEMPLATES, File, to_snake_case
+from ..commons import DOCS_PATH, ROOT_PATH, TEMPLATES, to_snake_case
 
 
 def get_metadata(obj: typing.Any) -> str | None:
@@ -111,7 +111,7 @@ def recursive_writer(doc: Doc) -> str:
     typer.echo(f"Writing docstring from import: {doc.name}")
 
     to_render = render(doc.name, doc.docstring, doc.level, "\n".join([recursive_writer(s) for s in doc.sub]))
-    with File(doc.path, "w") as doc_file:
+    with pathlib.Path.open(doc.path, "w") as doc_file:
         doc_file.write(to_render)
 
     return to_render

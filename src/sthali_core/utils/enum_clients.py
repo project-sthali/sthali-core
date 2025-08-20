@@ -16,7 +16,7 @@ class Clients:
             parent_path: The parent directory path where the 'clients' subdirectory resides.
             package: The package name to use for relative imports. Defaults to the parent_path's name.
         """
-        self.clients_directory = parent_path / pathlib.Path("clients")
+        self.clients_directory = parent_path / "clients"
         self.package = package or parent_path.name
 
     @property

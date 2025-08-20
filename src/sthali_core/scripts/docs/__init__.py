@@ -9,7 +9,7 @@ import typing
 
 import typer
 
-from ..commons import DOCS_PATH, TEMPLATES, File
+from ..commons import DOCS_PATH, TEMPLATES
 
 ORGANIZATION_NAME = "project-sthali"
 
@@ -46,12 +46,12 @@ class BaseDocsGenerator:
         typer.echo(f"Writing {file}")
         path = path or DOCS_PATH
         full_path = path / file
-        with File(full_path, "w") as f:
+        with pathlib.Path.open(full_path, "w") as f:
             for file_to_concatenate in [
                 DOCS_PATH / f"{i}.md" for i in ["index", "requirements", "installation", "usage"]
             ]:
                 typer.echo(f"Concatenating doc: {file_to_concatenate.name}")
-                with File(file_to_concatenate) as _f:
+                with pathlib.Path.open(file_to_concatenate) as _f:
                     f.write(_f.read())
                     f.write("\n")
 
@@ -85,7 +85,7 @@ class BaseDocsGenerator:
         path = path or DOCS_PATH
         full_path = path / file
         typer.echo(f"Writing {full_path}")
-        with File(full_path, "w") as f:
-            f.write(content)
+        with pathlib.Path.open(full_path, "w") as f:
+            f.write(content)  # type: ignore
 
         typer.echo(f"Generated {full_path}")

@@ -9,7 +9,7 @@ import pathlib
 import typer
 import yaml
 
-from ..commons import DOCS_PATH, ROOT_PATH, File
+from ..commons import DOCS_PATH, ROOT_PATH
 
 
 def main() -> None:
@@ -21,7 +21,7 @@ def main() -> None:
     typer.echo("Generating API Reference")
 
     typer.echo("Reading temp mkdocs")
-    with File(ROOT_PATH / "docs" / "mkdocs.yml") as mkdocs_file:
+    with pathlib.Path.open(ROOT_PATH / "docs" / "mkdocs.yml") as mkdocs_file:
         mkdocs_dict = yaml.safe_load(mkdocs_file.read())
 
     typer.echo("Getting references")
@@ -35,7 +35,7 @@ def main() -> None:
             ]
 
     typer.echo("Writing mkdocs")
-    with File(ROOT_PATH / "docs" / "mkdocs.yml", "w") as mkdocs_file:
+    with pathlib.Path.open(ROOT_PATH / "docs" / "mkdocs.yml", "w") as mkdocs_file:
         yaml.dump(mkdocs_dict, mkdocs_file)
 
     typer.echo("Generated API Reference")
