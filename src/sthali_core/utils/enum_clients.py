@@ -5,6 +5,10 @@ import importlib
 import pathlib
 import types
 
+all = [
+    "Clients",
+]
+
 
 class Clients:
     """Discovers and provides an Enum for client modules."""

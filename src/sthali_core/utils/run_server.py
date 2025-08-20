@@ -7,6 +7,11 @@ import uvicorn
 
 from .base import App, AppSpecification, Config
 
+all = [
+    "run",
+    "main",
+]
+
 
 def run(config: type[Config], app_spec: type[AppSpecification], app: type[App]) -> fastapi.FastAPI:
     """Initialize and return the FastAPI application.
