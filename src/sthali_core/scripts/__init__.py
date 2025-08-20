@@ -7,12 +7,23 @@ Classes:
 
 import datetime
 import enum
+import importlib
+import pathlib
 
-from .commons import DOCS_PATH, ROOT_PATH, read_pyproject
-from .docs import BaseDocsGenerator
-from .docs.generate_docstring import main as main_docstring
-from .docs.generate_mkdocs import main as main_mkdocs
-from .project.generate_project import main as main_project
+import cookiecutter.main  # type: ignore
+import typer
+import yaml
+
+from .commons import (
+    DOCS_PATH,
+    ROOT_PATH,
+    TEMPLATES_PATH,
+    BaseDocsGenerator,
+    get_imports_from_module,
+    read_pyproject,
+    recursive_writer,
+    to_snake_case,
+)
 
 
 class Generate:
@@ -68,7 +79,22 @@ class Generate:
                 Generate.execute(Generate.GenerateOptionsEnum.mkdocs)
 
             case Generate.GenerateOptionsEnum.docstring:
-                main_docstring()
+                project_slug = to_snake_case(str(ROOT_PATH.absolute()).split("/")[-1])
+                typer.echo(f"Generating docs for {project_slug}")
+
+                project_module = importlib.import_module(project_slug)
+                heading_level = 3
+                imports_from_module = get_imports_from_module(project_module, heading_level)
+
+                typer.echo("Clearing API Reference folder")
+                api_path = DOCS_PATH / "api"
+                for doc in api_path.glob("*"):
+                    doc.unlink()
+
+                for doc in imports_from_module:
+                    recursive_writer(doc)
+
+                typer.echo(f"Generated docs for {project_slug}")
 
             case Generate.GenerateOptionsEnum.index_file:
                 pyproject_content = read_pyproject()
@@ -108,11 +134,44 @@ class Generate:
                 docs_generator.render("mkdocs.yml", ROOT_PATH / "docs")
 
                 # append API references to mkdocs.yml
-                main_mkdocs()
+                typer.echo("Generating API Reference")
+
+                typer.echo("Reading temp mkdocs")
+                with pathlib.Path.open(ROOT_PATH / "docs" / "mkdocs.yml") as mkdocs_file:
+                    mkdocs_dict = yaml.safe_load(mkdocs_file.read())
+
+                typer.echo("Getting references")
+                api_references = sorted([i.name for i in pathlib.Path.iterdir(DOCS_PATH / "api")])
+
+                typer.echo("Rendering mkdocs_dict with the data")
+                for section in mkdocs_dict["nav"]:
+                    if "API Reference" in section:
+                        section["API Reference"] = [
+                            {"_".join(i.split("_")[1:]).rsplit(".", 1)[0]: f"api/{i}"} for i in api_references
+                        ]
+
+                typer.echo("Writing mkdocs")
+                with pathlib.Path.open(ROOT_PATH / "docs" / "mkdocs.yml", "w") as mkdocs_file:
+                    yaml.dump(mkdocs_dict, mkdocs_file)
+
+                typer.echo("Generated API Reference")
 
             case Generate.GenerateOptionsEnum.project:
                 assert project_name is not None, "Project name is required for project"
-                main_project(project_name)
+
+                typer.echo(f"Generating project with name: {project_name}")
+
+                typer.echo("Cloning template")
+                cookiecutter.main.cookiecutter(  # type: ignore
+                    str(TEMPLATES_PATH / "cookiecutter"),
+                    no_input=True,
+                    extra_context={
+                        "project_name": project_name,
+                        "project_slug": to_snake_case(project_name),
+                        "year": datetime.datetime.now(datetime.timezone.utc).year,
+                    },
+                    overwrite_if_exists=True,
+                )
 
                 Generate.execute(Generate.GenerateOptionsEnum.logo, project_name)
                 Generate.execute(Generate.GenerateOptionsEnum.licence)
