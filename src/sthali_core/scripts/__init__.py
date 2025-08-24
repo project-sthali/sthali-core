@@ -92,7 +92,9 @@ class Generate:
                     doc.unlink()
 
                 for doc in imports_from_module:
-                    recursive_writer(doc)
+                    to_render = recursive_writer(doc)
+                    with pathlib.Path.open(doc.path, "w") as doc_file:
+                        doc_file.write(to_render)
 
                 typer.echo(f"Generated docs for {project_slug}")
 
