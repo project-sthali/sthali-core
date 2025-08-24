@@ -5,15 +5,15 @@ import os
 import fastapi
 import uvicorn
 
-from .base import App, AppSpecification, Config
+from . import base
 
-all = [
-    "run",
+__all__ = [
     "main",
+    "run",
 ]
 
 
-def run(config: type[Config], app_spec: type[AppSpecification], app: type[App]) -> fastapi.FastAPI:
+def run(config: type[base.Config], app_spec: type[base.AppSpecification], app: type[base.App]) -> fastapi.FastAPI:
     """Initialize and return the FastAPI application.
 
     Args:
@@ -34,7 +34,7 @@ def main(app: fastapi.FastAPI, port: int = 8000) -> None:
     """Run the FastAPI application using Uvicorn.
 
     Args:
-        app: The FastAPI application instance to run.
-        port: The port number to run the server on. Defaults to 8000.
+        app (fastapi.FastAPI): The FastAPI application instance to run.
+        port (int): The port number to run the server on. Defaults to 8000.
     """
     uvicorn.run(app, host="0.0.0.0", port=port)

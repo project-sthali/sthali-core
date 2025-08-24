@@ -88,7 +88,7 @@ def recursive_writer(doc: Doc) -> str:
         str: The rendered Markdown string for this Doc and its children.
     """
 
-    def _render(name: str, docstring: str, level: int = 3, sub: str | None = None) -> str:
+    def _to_render(name: str, docstring: str, level: int = 3, sub: str | None = None) -> str:
         template = TEMPLATES.get_template("docstring.md")  # type: ignore
         return template.render(  # type: ignore
             name=name,
@@ -98,12 +98,7 @@ def recursive_writer(doc: Doc) -> str:
         )
 
     typer.echo(f"Writing docstring from import: {doc.name}")
-
-    to_render = _render(doc.name, doc.docstring, doc.level, "\n".join([recursive_writer(s) for s in doc.sub]))
-    with pathlib.Path.open(doc.path, "w") as doc_file:
-        doc_file.write(to_render)
-
-    return to_render
+    return _to_render(doc.name, doc.docstring, doc.level, "\n".join([recursive_writer(s) for s in doc.sub]))
 
 
 TypesMapping = typing.Literal["module", "function", "class"]
