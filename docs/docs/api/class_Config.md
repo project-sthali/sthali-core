@@ -1,6 +1,6 @@
 #### `Config`
 
 ```
-Manages application configuration.
+Discovers and provides an Enum for client modules.
 ```
 
